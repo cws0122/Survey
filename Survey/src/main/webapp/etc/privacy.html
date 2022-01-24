@@ -1,0 +1,569 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>서울학교급식포털</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css" />
+<link href="../css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" >
+<!--
+
+	var flag1=true;
+	var flag2=true;
+	
+	$(document).ready(function(){
+		$(".mainMenu").each(function(index, item){
+			$(item).click(function(){
+				flag1=false;
+			});
+		});
+		
+		$(".subMenu").each(function(index, item){
+			$(item).click(function(){
+				flag1=true;
+				flag2=false;
+			});
+		});
+	});
+
+   function getElementsByClass(searchClass, node, tag) {
+     var classElements = new Array();
+     if ( node == null ) node = document;
+     if ( tag == null ) tag = '*';
+     var els = node.getElementsByTagName(tag);
+     var elsLen = els.length;
+     var pattern = new RegExp("(^|\\s)"+searchClass+"(\\s|$)");
+     for (i = 0, j = 0; i < elsLen; i++) {
+      if ( pattern.test(els[i].className) ) {
+        classElements[j] = els[i];
+        j++;
+      }
+    }
+    return classElements;
+  }
+
+  function menuHidden(menu, sub) {
+    menu.src = menu.src.replace("On", "Off");
+    sub.style.display = "none";
+  }
+
+  function setEvtGnb() {
+    var mainMenu = getElementsByClass("mainMenu");
+    var prevMenu1, prevSub1, isHid1, prevMenu2, isHid2;
+	
+	var subMenu = getElementsByClass("subMenu");
+	
+    for (var i=0; i<mainMenu.length; i++) {
+      (function (pos){
+        mainMenu[pos].getElementsByTagName("img")[0].onmouseover = function(){
+          if(prevMenu1) menuHidden(prevMenu1, prevSub1);
+          prevMenu1 = this;
+          this.src = this.src.replace("Off", "On");
+          prevSub1 = document.getElementById("sub"+("0"+(pos+1)).match(/..$/));
+          prevSub1.style.display = "block";
+        };
+    
+        mainMenu[pos].onmouseout = function(e){
+          var bool, e= e || event;
+          (function (obj, tobj) {
+            var childs = obj.childNodes;
+            for (var x=0; x<childs.length; x++) {
+              if(childs[x] == tobj) bool = true;
+              else arguments.callee(childs[x], tobj);
+            }
+          })(this, document.elementFromPoint(e.clientX, e.clientY));
+          if(flag1){
+	          if(bool) return false;
+	          menuHidden(prevMenu1, prevSub1);
+          }
+        };
+      })(i);
+    }
+	
+	for (var j=0; j<subMenu.length; j++) {
+      (function (pos){
+        subMenu[pos].getElementsByTagName("img")[0].onmouseover = function(){
+          prevMenu2 = this;
+          this.src = this.src.replace("Off", "On");
+          prevSub2 = document.getElementById("sub"+("0"+(pos+1)).match(/..$/));
+       	  flag2=true;
+        };
+    
+        subMenu[pos].onmouseout = function(e){
+          var bool, e= e || event;
+          (function (obj, tobj) {
+            var childs = obj.childNodes;
+            for (var x=0; x<childs.length; x++) {
+              if(childs[x] == tobj) bool = true;
+              else arguments.callee(childs[x], tobj);
+            }
+          })(this, document.elementFromPoint(e.clientX, e.clientY));
+          if(flag2){
+	          if(bool) return false;
+	          menuHidden(prevMenu2, prevSub2);
+          }
+        };
+      })(j);
+    }
+  }
+ 
+  window.onload = function() {
+    setEvtGnb();
+  }
+//-->
+</script>
+<script type="text/javascript">
+initPage = function() {
+	
+};
+
+doGoTab = function(thisObject, tab) {
+	$(".factory_tab").find(">li>a").each(function(index, el) {
+		$(el).removeClass("factory_tab0"+(index+1)+"_on");
+		$(el).addClass("factory_tab0"+(index+1));
+	});
+	$(thisObject).addClass("factory_tab"+tab+"_on");
+	if("01"==tab){
+		$("#tab02,#tab03").hide();
+		$("#tab01").show();
+	}else if("02"==tab){
+		$("#tab01,#tab03").hide();
+		$("#tab02").show();
+	
+	}else{
+		$("#tab01,#tab02").hide();
+		$("#tab03").show();
+	}
+};
+</script>
+</head>
+<body>
+<div id="wrap"> 
+  <!--skip S-->
+  <ul id="skipnavi">
+    <li><a href="#gnb">주메뉴 바로가기</a></li>
+    <li><a href="#contents">메인내용 바로가기</a></li>
+    <li><a href="#footer">하단 바로가기</a></li>
+  </ul>
+  <!--skip E--> 
+  
+  <!-- header-->
+  <div id="header">
+    <h1><img src="../images/header/common/logo.gif" alt="서울학교급식포털" /></h1>
+    <div class="topmenu">
+      <ul>
+        <li class="bn"><a href="#">HOME</a></li>
+        <li><a href="#">SITEMAP</a></li>
+        <li class="bn"> <a href="#"><img src="../images/header/common/btn_login.gif" alt="로그인" /></a></li>
+      </ul>
+    </div>
+    <div id="gnb">
+      <h2>주메뉴</h2>
+      <ul class="MM">
+        <li class="mainMenu first"><a href="#"><img src="../images/header/common/mm_infoOff.gif" id="sel1" alt="서울학교급식소개" /></a>
+          <div class="subMenu" id="sub01" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_info01Off.gif" alt="인사말" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_info02Off.gif" alt="학교급식기본방향" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_info03Off.gif" alt="학교급식현황" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_info04Off.gif" alt="학교급식 담당부서" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_safetyOff.gif" alt="학교급식위생안전" /></a>
+          <div class="subMenu" id="sub02" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_safety01Off.gif" alt="학교급식 위생관리" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_safety02Off.gif" alt="식중독 대처요령" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_safety03Off.gif" alt="안전사고예방" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_safety04Off.gif" alt="안전사고 대처요령" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_safety05Off.gif" alt="위생.안전성 검사결과" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_factoryOff.gif" alt="학교급식시설관리" /></a>
+          <div class="subMenu" id="sub03" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_factory01Off.gif" alt="급식환경개선사업" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_factory01Off.gif" alt="급식시설개선사례" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_factory01Off.gif" alt="급식기구관리전환" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_factory01Off.gif" alt="컨설팅신청안내" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_foodOff.gif" alt="학교급식식재료" /></a>
+          <div class="subMenu" id="sub04" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_food01Off.gif" alt="식재료 구매·관리" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_food02Off.gif" alt="식재료 시장조사" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_food03Off.gif" alt="부적합 납품 업체" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_eduOff.gif" alt="영양,교육" /></a>
+          <div class="subMenu" id="sub05" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_edu01Off.gif" alt="영양·식생활교육" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_edu02Off.gif" alt="추천식단" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_edu03Off.gif" alt="추천레시피" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_edu04Off.gif" alt="학교급식특색활동" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_partOff.gif" alt="알림마당" /></a>
+          <div class="subMenu" id="sub06" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part01Off.gif" alt="학교급식인력풀" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part02Off.gif" alt="영양(교)사이야기" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part03Off.gif" alt="조리(원)사이야기" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part04Off.gif" alt="자유게시판" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_part04Off.gif" alt="설문조사" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu last"><a href="#"><img src="../images/header/common/mm_noticeOff.gif" alt="정보마당" /></a>
+          <div class="subMenu" id="sub07" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="급식소식" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="연수·행사" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="업무자료실" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="관련법규" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="FAQ" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- //header--> 
+  
+  <!-- container-->
+  <div id="container">
+    <div id="contents">
+      <h2>메인내용</h2>
+      <p><img src="../images/sub/etc/sub_vimg_01.jpg" alt="건강한 급식 행복한 학교" /></p>
+      <ul class="lnb">
+        <li><img src="../images/sub/etc/sub_title_01.gif" alt="정보마당" /></li>
+        <li><a href="#"><img src="../images/sub/etc/sub_stitle_01Off.gif" alt="로그인" /></a></li>
+        <li><a href="#"><img src="../images/sub/etc/sub_stitle_02Off.gif" alt="본인확인" /></a></li>
+        <li><a href="#"><img src="../images/sub/etc/sub_stitle_03Off.gif" alt="관련기관링크" /></a></li>
+        <li><a href="#"><img src="../images/sub/etc/sub_stitle_04On.gif" alt="개인보호정책" /></a></li>
+        <li><a href="#"><img src="../images/sub/etc/sub_stitle_05Off.gif" alt="이메일무단수집거부" /></a></li>
+        <li><a href="#"><img src="../images/sub/etc/sub_stitle_06Off.gif" alt="저작권보호" /></a></li>
+        <li><a href="#"><img src="../images/sub/etc/sub_stitle_07Off.gif" alt="뷰어프로그램" /></a></li>
+         <li><a href="#"><img src="../images/sub/etc/sub_stitle_08Off.gif" alt="팝업관리" /></a></li>
+         <li><a href="#"><img src="../images/sub/etc/sub_stitle_09Off.gif" alt="사이트맵" /></a></li>
+      </ul>
+      <div class="right_box">
+        <h3><img src="../images/sub/etc/title_04.gif" alt="개인보호정책" /></h3>
+        <p class="history"><img src="../images/sub/history_home.gif" alt="home" /> 기타 <img src="../images/sub/history_arrow.gif" alt="다음" /> <strong>관련기관링크</strong></p>
+        <p class="gary_line"></p>
+        <p class="text_f">서울학교급식포털은 개인정보보호법에 따라 이용자의 개인정보 보호 및 권익을 보호하고 개인정보와 관련한 이용자의 고충을 원활하게 처리할 수 있도록 다음과 같은 처리방침을 두고 있습니다.<br />
+          이 방침은 별도의 설명이 없는 한 서울학교급식포털에서 처리하는 모든 개인정보 파일에 적용됩니다. 다만, 소관업무 처리를 위해 서울학교급식포털 각 부서에서 별도의 개인정보 처리방침을 제정, 시행하는 경우에는 그에 따르고, 해당 부서가 운영하는 홈페이지에 게시함을 알려드립니다. </p>
+        <p class="pt15"></p>
+        <h4 class="dot"><span class="f14 b">제1조. 개인정보의 처리 목적, 항목, 보유기간</span></h4>
+        <p class="text_f cb pt10">
+        개인정보는 다음의 목적을 위해 처리합니다. 처리한 개인정보는 목적이외의 용도로는 사용되지 않으며 이용 목적이 변경될 시에는 사전 동의를 구할 예정입니다.<br />
+
+또한, 개인정보는 원칙적으로 개인정보의 처리목적이 달성되면 지체 없이 파기하며 명시한 기간 동안 보존합니다.<br />
+
+<span class="blue">※ 세부 내용은 개인정보보호 <a href="www.privacy.go.kr" target="_blank">종합지원포털(www.privacy.go.kr)</a> ▷ 개인정보민원 ▷ 개인정보의 열람 등 요구 ▷ 개인정보파일 목록 검색 ▷ 기관명에 “서울학교급식포털” 입력 후 조회 가능</span>
+
+        </p>
+        
+        <div class="tbl_box pt10">
+        
+        <table class="tbl_type02" summary="개인정보의 수집 및 보유에 대한 개인정보파일명, 보유목적, 보유근거, 기록항목, 보유기간, 보유부서명을 나타낸 표">
+		<caption>개인정보의 수집 및 보유</caption>
+		<colgroup>
+			<col width="18%" />
+			<col width="15%" />
+			<col width="20%" />
+			<col width="27%" />
+			<col width="10%" />
+			<col width="10%" />
+		</colgroup>
+		<thead>
+			<tr>
+				<th>개인정보파일명</th>
+				<th>보유목적</th>
+				<th>보유근거</th>
+				<th>기록항목</th>
+				<th>보유기간</th>
+				<th>보유부서명</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>기관홈페이지<br />회원정보</td>
+				<td>기관홈페이지 관리</td>
+				<td>정보주체 동의</td>
+				<td>성명, 전화번호, 휴대번호, 이메일, 소속기관</td>
+				<td>2년</td>
+				<td>정보화<br />담당관</td>
+			</tr>
+            </tbody>
+            </table>
+        </div>
+       <p class="pt30"></p>
+        <h4 class="dot"><span class="f14 b">제2조. 개인정보의 제3자 제공</span></h4>
+        <p class="text_f cb pt10">서울학교급식포털은 원칙적으로 이용자의 개인정보를 수집·이용 목적으로 명시한 범위 내에서 처리하며, 다음의 경우를 제외하고는 정보주체의 사전 동의 없이 본래의 목적 범위를 초과하여 처리하거나 제3자에게 제공하지 않습니다.</p>
+		<ul class="s_txt">
+		<li>1. 정보주체로부터 별도의 동의를 받는 경우</li>
+		<li>2. 법률에 특별한 규정이 있는 경우</li>
+		<li>3. 정보주체 또는 법정대리인이 의사표시를 할 수 없는 상태에 있거나 주소불명 등으로 사전 동의를 받을 수 없는 경우로서 명백히 정보주체 또는 제3자의 급박한 생명, 신체, 재산의 이익을 위하여 필요하다고 인정되는 경우</li>
+		<li>4. 통계작성 및 학술연구 등의 목적을 위하여 필요한 경우로서 특정 개인을 알아 볼 수 없는 형태로 개인정보를 제공하는 경우</li>
+		<li>5. 개인정보를 목적 외의 용도로 이용하거나 이를 제3자에게 제공하지 아니하면 다른 법률에서 정하는 소관 업무를 수행할 수 없는 경우로서 보호위원회의 심의·의결을 거친 경우 </li>
+		<li>6. 조약, 그 밖의 국제협정의 이행을 위하여 외국정보 또는 국제기구에 제공하기 위하여 필요한 경우 </li>
+		<li>7. 범죄의 수사와 공소의 제기 및 유지를 위하여 필요한 경우 </li>
+		<li>8. 법원의 재판업무 수행을 위하여 필요한 경우 </li>
+		<li>9. 형 및 감호, 보호처분의 집행을 위하여 필요한 경우</li>
+	</ul>
+    
+    <p class="pt30"></p>
+    <h4 class="dot"><span class="f14 b">제3조. 개인정보처리의 위탁</span></h4>
+	<p class="text_f cb pt10">서울학교급식포털은 개인정보의 처리 업무를 위탁하는 경우 다음의 내용이 포함된 문서에 의하여 처리하고 있습니다.</p>
+	<ul class="s_txt">
+		<li>1. 위탁업무 수행 목적 외 개인정보의 처리 금지에 관한 사항</li>
+		<li>2. 개인정보의 관리적·기술적 보호조치에 관한 사항</li>
+		<li>3. 개인정보의 안전관리에 관한 사항
+			<ul>
+				<li>- 위탁업무의 목적 및 범위, 재위탁 제한에 관한 사항, 개인정보 안전성 확보 조치에 관한 사항, 위탁업무와 관련하여 보유하고 있는 개인정보의 관리현황점검 등 감독에 관한 사항, 수탁자가 준수하여야할 의무를 위반한 경우의 손해배상책임에 관한 사항 </li>
+			</ul>
+		</li>
+	</ul>
+	<p class="text_f cb pt10">또한, 위탁하는 업무의 내용과 개인정보 처리업무를 위탁받아 처리하는 자(“수탁자”)에 대하여 해당 홈페이지에 공개하고 있습니다.</p>
+    
+    
+    <p class="pt30"></p>
+     <h4 class="dot"><span class="f14 b">제4조. 정보주체의 권리·의무 및 그 행사 방법</span></h4>
+	<p class="text_f cb pt10">정보주체는 다음과 같은 권리를 행사 할 수 있으며, 만14세 미만 아동의 법정대리인은 그 아동의 개인정보에 대한 열람, 정정·삭제, 처리정지를 요구할 수 있습니다.</p>
+	<ul class="s_txt">
+		<li>1. 개인정보 열람 요구
+			<p>서울학교급식포털에서 보유하고 있는 개인정보파일은「개인정보보호법」제35조(개인정보의 열람)에 따라 자신의 개인정보에 대한 열람을 요구할 수 있습니다. 다만, 개인정보 열람 요구는 법 제35조 5항에 의하여 다음과 같이 제한될 수 있습니다.</p>
+			<ul>
+				<li>가. 법률에 따라 열람이 금지되거나 제한되는 경우</li>
+				<li>나. 다른 사람의 생명·신체를 해할 우려가 있거나 다른 사람의 재산과 그 밖의 이익을 부당하게 침해할 우려가 있는 경우</li>
+				<li>다. 공공기관이 다음 각 목의 어느 하나에 해당하는 업무를 수행할 때 중대한 지장을 초래하는 경우
+					<ul>
+						<li>1) 조세의 부과·징수 또는 환급에 관한 업무</li>
+						<li>2) 「초·중등교육법」및「고등교육법」에 따른 각급 학교,「평생교육법」에 따른 평생교육시설, 그 밖의 다른 법률에 따라 설치 된 고등교육기관에서의 성적 평가 또는 입학자 선발에 관한 업무</li>
+						<li>3) 학력·기능 및 채용에 관한 시험, 자격 심사에 관한 업무</li>
+						<li>4) 보상금·급부금 산정 등에 대하여 진행 중인 평가 또는 판단에 관한 업무</li>
+						<li>5) 다른 법률에 따라 진행 중인 감사 및 조사에 관한 업무</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li>2. 개인정보 정정·삭제 요구
+			<p>서울학교급식포털에서 보유하고 있는 개인정보파일은「개인정보보호법」 제36조(개인정보의 정정·삭제)에 따라 정정·삭제를 요구할 수 있습니다. 다만, 다른 법령에서 그 개인정보가 수집 대상으로 명시되어 있는 경우에는 그 삭제를 요구할 수 없습니다.</p>
+		</li>
+		<li>3. 개인정보 처리정지 요구
+			<p>서울학교급식포털에서 보유하고 있는 개인정보파일은 「개인정보보호법」 제37조(개인정보의 처리정지 등)에 따라 처리정지를 요구할 수 있습니다. 다만, 개인정보 처리정지 요구 시 법 제37조 2항에 의하여 처리정지 요구가 거절될 수 있습니다.</p>
+			<ul>
+				<li>가. 법률에 특별한 규정이 있거나 법령상 의무를 준수하기 위하여 불가피한 경우</li>
+				<li>나. 다른 사람의 생명·신체를 해할 우려가 있거나 다른 사람의 재산과 그 밖의 이익을 부당하게 침해할 우려가 있는 경우 </li>
+				<li>다. 공공기관이 개인정보를 처리하지 아니하면 다른 법률에서 정하는 소관 업무를 수행할 수 없는 경우</li>
+				<li>라. 개인정보를 처리하지 아니하면 정보주체와 약정한 서비스를 제공하지 못하는 등 계약의 이행이 곤란한 경우로서 정보주체가 그 계약의 해지 의사를 명확하게 밝히지 아니한 경우 </li>
+			</ul>
+		</li>		
+	</ul>
+
+	<p class="pt30"></p>
+	 <h4 class="dot"><span class="f14 b">제5조. 개인정보의 파기</span></h4>
+	<p class="text_f cb pt10">서울학교급식포털은 원칙적으로 개인정보 처리목적이 달성된 경우에는 지체 없이 해당 개인정보를 파기합니다. 파기의 절차, 기한 및 방법은 다음과 같습니다.</p>
+	<ul class="s_txt">
+		<li>1. 파기절차
+			<p>- 개인정보는 목적 달성 후 즉시 또는 별도의 공간에 옮겨져 내부 방침 및 기타 관련법령에 따라 일정기간 저장된 후 파기됩니다. 별도의 공간으로 옮겨진 개인정보는 법률에 의한 경우가 아니고서는 다른 목적으로 이용되지 않습니다.</p>
+		</li>
+		<li>2. 파기기한 및 방법
+			<p>- 보유기간이 만료되었거나 개인정보의 처리 목적 달성, 해당 업무의 폐지 등 그 개인정보가 불필요하게 되었을 때에는 지체없이 파기합니다. </p>
+			<p>- 종이에 출력된 개인정보는 분쇄기로 분쇄하거나 소각을 통하여 파기합니다.</p>
+			<p>- 전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용합니다.</p>
+		</li>
+	</ul>
+	<p>※ 보존기간이 만료된 개인정보는 회원정보를 제외하고는 “공공기관 기록물관리법”에 따라 심의를 거쳐 파기됩니다. 보존기간 만료에서 파기시까지는 별도의 DB에 관리함을 알려드립니다.</p>
+	
+<p class="pt30"></p>
+	<h4 class="dot"><span class="f14 b">제6조. 개인정보의 안전성 확보 조치</span></h4>
+	<p class="text_f cb pt10">서울학교급식포털은 개인정보보호법 제29조에 따라 다음과 같이 안전성 확보에 필요한 기술적/관리적 및 물리적 조치를 하고 있습니다.</p>
+	<ul class="s_txt">
+		<li>1. 개인정보 취급 직원의 최소화 및 교육 
+			<p>- 개인정보를 취급하는 담당자를 최소화하여 지정하고 담당자에 한정시켜 개인정보를 관리하는 대책을 시행하고 있습니다.</p>
+		</li>
+		<li>2. 내부관리계획의 수립 및 시행
+			<p>- 개인정보의 안전한 처리를 위하여 내부관리계획을 수립하고 시행하고 있습니다.</p>
+		</li>
+		<li>3. 개인정보의 암호화 
+			<p>- 이용자의 비밀번호 등 주요 개인정보는 암호화하여 저장 및 관리되고 있어 본인만이 알 수 있으며, 중요한 데이터는 전송 시 암호화 하거나 파일 잠금 기능을 사용하는 등의 별도 보안기능을 사용하고 있습니다.</p>
+		</li>
+		<li>4. 해킹 등에 대비한 기술적 대책 
+			<p>- 해킹이나 컴퓨터 바이러스 등에 의한 개인정보 유출 및 훼손을 막기 위하여 보안프로그램을 설치하고, 주기적인 갱신·점검을 하며, 외부로부터 접근이 통제된 구역에 시스템을 설치하여 기술적/물리적으로 감시 및 차단을 실시하고 있습니다. </p>
+		</li>
+		<li>5. 개인정보처리시스템 접근 제한 
+			<p>- 개인정보를 처리하는 데이터베이스시스템에 대한 접근권한의 부여, 변경, 말소를 통하여 개인정보에 대한 접근통제를 위하여 필요한 조치를 하고 있으며 침입차단시스템을 이용하여 외부로부터의 무단 접근을 통제하고 있습니다.</p>
+		</li>
+		<li>6. 접속기록의 보관
+			<p>- 개인정보처리시스템에 접속한 기록(웹로그, 요약정보 등)을 최소 6개월 이상 보관하고 있습니다.</p>
+		</li>
+		<li>7. 문서보안을 위한 잠금장치 사용 
+			<p>- 개인정보가 포함된 서류, 보조저장매체 등을 잠금장치가 있는 안전한 장소에 보관하고 있습니다.</p>
+		</li>
+		<li>8. 비인가자에 대한 출입 통제
+			<p>- 개인정보를 보관하고 있는 물리적 보관 장소를 별도로 두고 이에 대해 출입통제 절차를 수립, 운영하고 있습니다.</p>
+		</li>
+	</ul>
+	
+	<p class="pt30"></p>
+	<h4 class="dot"><span class="f14 b">제7조. 개인정보 책임자 및 담당자 연락처</span></h4>
+	<p class="text_f cb pt10">개인정보보호책임자 : 기획조정실장(이승복)</p>
+	<p class="text_f cb pt10">개인정보보호담당자 : 정보화담당관(이무수)</p>
+	<p class="text_f cb pt10">연락처 : 정보보호팀 송하나(02-3999-344, heajandi@sen.go.kr)</p>
+	
+    <div class="tbl_box pt10">
+    <table class="tbl_type02" summary="담당부서명, 개인정보보호, 성명, 파일명별로 나눠진 담당자연락처를 나타내는 표" width="100%">
+		<caption>개인정보 책임자 및 담당자 연락처</caption>
+		<colgroup>
+			<col width="20%" />
+			<col width="20%" />
+			<col width="10%" />
+			<col width="15%" />
+			<col width="*%" />
+		</colgroup>
+		<thead>
+			<tr>
+				<th scope="col">담당부서명</th>
+				<th scope="col">(개인정보보호)</th>
+				<th scope="col">성명</th>
+				<th scope="col">전화(3999-)</th>
+				<th scope="col">개인정보파일명</th>
+			</tr>
+		</thead>
+        <tbody>
+        <tr>
+				<td rowspan="3">정보화담당관</td>
+				<td>분야별책임자</td>
+				<td>이무수</td>
+				<td>033</td>
+				<td>&nbsp; </td>
+			</tr>
+			<tr>
+				<td>분야별담당자</td>
+				<td>천영철</td>
+				<td>336</td>
+				<td>&nbsp; </td>
+			</tr>
+			<tr>
+				<td>취급자</td>
+				<td>탁준표</td>
+				<td>392</td>
+				<td>기관홈페이지회원정보</td>
+			</tr>
+            <tr>
+				<td rowspan="2">학교지원과</td>
+				<td>분야별책임자</td>
+				<td>박석문</td>
+				<td>606</td>
+				<td>&nbsp; </td>
+			</tr>
+			<tr>
+				<td>분야별담당자</td>
+				<td>이경원</td>
+				<td>606</td>
+				<td>&nbsp; </td>
+			</tr>
+
+
+        </tbody>
+        </table>
+        </div>
+        
+        
+        <p class="pt30"></p>
+	   <h4 class="dot"><span class="f14 b">제8조. 권익침해 구제방법</span></h4>
+	<p class="text_f cb pt10">정보주체는 개인정보침해로 인한 구제를 받기 위하여 개인정보분쟁조정위원회, 한국인터넷진흥원 개인정보침해신고센터 등에 분쟁해결이나 상담 등을 신청할 수 있습니다.</p>
+	
+	<p>개인정보 침해신고센터 (한국인터넷진흥원 운영)</p>
+	<ul class="s_txt">
+    <li>소관업무 : 개인정보 침해사실 신고, 상담 신청</li>
+	<li>홈페이지 : privacy.kisa.or.kr</li>
+	<li>전화 : (국번없이) 118</li>
+	<li>주소 : (138-950) 서울시 송파구 중대로 135 한국인터넷진흥원 개인정보침해신고센터</li>
+     </ul>
+	
+    
+    <p>개인정보 분쟁조정위원회 (한국인터넷진흥원 운영)</p>
+	<ul class="s_txt">
+    <li>소관업무 : 개인정보 분쟁조정신청, 집단분쟁조정 (민사적 해결)</li>
+	<li>홈페이지 : privacy.kisa.or.kr</li>
+	<li>전화 : (국번없이) 118</li>
+	<li>주소 : (138-950) 서울시 송파구 중대로 135 한국인터넷진흥원 개인정보침해신고센터</li>
+     </ul>
+		
+	<p class="text_f cb pt10">대검찰청 사이버범죄수사단 : 02-3480-3571 (www.spo.go.kr, cybercid@spo.go.kr)</p>
+	<p class="text_f cb pt10">경찰청 사이버테러대응센터 : 1566-0112 (www.netan.go.kr) </p>
+	
+	<p class="text_f cb pt10">또한, 개인정보의 열람, 정정·삭제, 처리정지 등에 대한 정보주체자의 요구에 대하여 공공기관의 장이 행한 처분 또는 부작위로 인하여 권리 또는 이익을 침해 받은 자는 행정심판법이 정하는 바에 따라 행정심판을 청구할 수 있습니다.</p>
+	<p class="text_f cb pt10">&nbsp;&nbsp;- 중앙행정심판위원회(www.simpan.go.kr)의 전화번호 안내 참조</p>
+	
+	<p class="pt30"></p>
+	<h4 class="dot"><span class="f14 b">제9조. 개인정보 처리방침의 변경</span></h4>
+	<p class="text_f cb pt10"><span class="blue b">본 개인정보처리방침은 시행일로부터 적용됩니다.</span> </p>
+	<p class="text_f cb pt10"><span class="blue b">시행일자 : 2014.1.17.</span></p>
+
+
+        
+      </div>
+      <p class="bottom_bg"></p>
+    </div>
+  </div>
+  <!-- //container-->
+  
+  <div id="footer">
+    <h2>하단</h2>
+    <address>
+    110-781) 서울특별시 종로구 송월길 48(신문로 2-77)
+    </address>
+    <p>COPYRIGHT(C) 2013 <b>SEOUL metropolitan office of education</b> ALL RIGHT RESERVED</p>
+    <ul>
+      <li class="bn"><a href="#">개인정보보호정책</a></li>
+      <li><a href="#">이메일 무단수집거부</a></li>
+      <li><a href="#">뷰어프로그램</a></li>
+      <li><a href="#">저작권보호</a></li>
+      <li><a href="#">서울학교급식 배너다운로드</a></li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

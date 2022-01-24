@@ -1,0 +1,364 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>서울학교급식포털</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css" />
+<link href="../css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+
+<script type="text/javascript" >
+<!--
+
+	var flag1=true;
+	var flag2=true;
+	
+	$(document).ready(function(){
+		$(".mainMenu").each(function(index, item){
+			$(item).click(function(){
+				flag1=false;
+			});
+		});
+		
+		$(".subMenu").each(function(index, item){
+			$(item).click(function(){
+				flag1=true;
+				flag2=false;
+			});
+		});
+	});
+
+   function getElementsByClass(searchClass, node, tag) {
+     var classElements = new Array();
+     if ( node == null ) node = document;
+     if ( tag == null ) tag = '*';
+     var els = node.getElementsByTagName(tag);
+     var elsLen = els.length;
+     var pattern = new RegExp("(^|\\s)"+searchClass+"(\\s|$)");
+     for (i = 0, j = 0; i < elsLen; i++) {
+      if ( pattern.test(els[i].className) ) {
+        classElements[j] = els[i];
+        j++;
+      }
+    }
+    return classElements;
+  }
+
+  function menuHidden(menu, sub) {
+    menu.src = menu.src.replace("On", "Off");
+    sub.style.display = "none";
+  }
+
+  function setEvtGnb() {
+    var mainMenu = getElementsByClass("mainMenu");
+    var prevMenu1, prevSub1, isHid1, prevMenu2, isHid2;
+	
+	var subMenu = getElementsByClass("subMenu");
+	
+    for (var i=0; i<mainMenu.length; i++) {
+      (function (pos){
+        mainMenu[pos].getElementsByTagName("img")[0].onmouseover = function(){
+          if(prevMenu1) menuHidden(prevMenu1, prevSub1);
+          prevMenu1 = this;
+          this.src = this.src.replace("Off", "On");
+          prevSub1 = document.getElementById("sub"+("0"+(pos+1)).match(/..$/));
+          prevSub1.style.display = "block";
+        };
+    
+        mainMenu[pos].onmouseout = function(e){
+          var bool, e= e || event;
+          (function (obj, tobj) {
+            var childs = obj.childNodes;
+            for (var x=0; x<childs.length; x++) {
+              if(childs[x] == tobj) bool = true;
+              else arguments.callee(childs[x], tobj);
+            }
+          })(this, document.elementFromPoint(e.clientX, e.clientY));
+          if(flag1){
+	          if(bool) return false;
+	          menuHidden(prevMenu1, prevSub1);
+          }
+        };
+      })(i);
+    }
+	
+	for (var j=0; j<subMenu.length; j++) {
+      (function (pos){
+        subMenu[pos].getElementsByTagName("img")[0].onmouseover = function(){
+          prevMenu2 = this;
+          this.src = this.src.replace("Off", "On");
+          prevSub2 = document.getElementById("sub"+("0"+(pos+1)).match(/..$/));
+       	  flag2=true;
+        };
+    
+        subMenu[pos].onmouseout = function(e){
+          var bool, e= e || event;
+          (function (obj, tobj) {
+            var childs = obj.childNodes;
+            for (var x=0; x<childs.length; x++) {
+              if(childs[x] == tobj) bool = true;
+              else arguments.callee(childs[x], tobj);
+            }
+          })(this, document.elementFromPoint(e.clientX, e.clientY));
+          if(flag2){
+	          if(bool) return false;
+	          menuHidden(prevMenu2, prevSub2);
+          }
+        };
+      })(j);
+    }
+  }
+ 
+  window.onload = function() {
+    setEvtGnb();
+  }
+//-->
+</script>
+
+<script type="text/javascript">
+initPage = function() {
+	
+};
+
+doGoTab = function(thisObject, tab) {
+	$(".factory_tab").find(">li>a").each(function(index, el) {
+		$(el).removeClass("factory_tab0"+(index+1)+"_on");
+		$(el).addClass("factory_tab0"+(index+1));
+	});
+	$(thisObject).addClass("factory_tab"+tab+"_on");
+	if("01"==tab){
+		$("#tab02,#tab03").hide();
+		$("#tab01").show();
+	}else if("02"==tab){
+		$("#tab01,#tab03").hide();
+		$("#tab02").show();
+	
+	}else{
+		$("#tab01,#tab02").hide();
+		$("#tab03").show();
+	}
+};
+</script>
+</head>
+<body>
+<div id="wrap"> 
+  <!--skip S-->
+  <ul id="skipnavi">
+    <li><a href="#gnb">주메뉴 바로가기</a></li>
+    <li><a href="#contents">메인내용 바로가기</a></li>
+    <li><a href="#footer">하단 바로가기</a></li>
+  </ul>
+  <!--skip E--> 
+  
+  <!-- header-->
+  <div id="header">
+    <h1><img src="../images/header/common/logo.gif" alt="서울학교급식포털" /></h1>
+    <div class="topmenu">
+      <ul>
+        <li class="bn"><a href="#">HOME</a></li>
+        <li><a href="#">SITEMAP</a></li>
+        <li class="bn"> <a href="#"><img src="../images/header/common/btn_login.gif" alt="로그인" /></a></li>
+      </ul>
+    </div>
+    <div id="gnb">
+      <h2>주메뉴</h2>
+      <ul class="MM">
+        <li class="mainMenu first"><a href="#"><img src="../images/header/common/mm_infoOff.gif" id="sel1" alt="서울학교급식소개" /></a>
+         <div class="subMenu" id="sub01" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_info01Off.gif" alt="인사말" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_info02Off.gif" alt="학교급식기본방향" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_info03Off.gif" alt="학교급식현황" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_info04Off.gif" alt="학교급식 담당부서" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_safetyOff.gif" alt="학교급식위생안전" /></a>
+          <div class="subMenu" id="sub02" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_safety01Off.gif" alt="학교급식 위생관리" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_safety02Off.gif" alt="식중독 대처요령" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_safety03Off.gif" alt="안전사고예방" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_safety04Off.gif" alt="안전사고 대처요령" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_safety05Off.gif" alt="위생.안전성 검사결과" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_factoryOff.gif" alt="학교급식시설관리" /></a>
+          <div class="subMenu" id="sub03" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                 <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_factory01Off.gif" alt="급식환경개선사업" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_factory01Off.gif" alt="급식시설개선사례" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_factory01Off.gif" alt="급식기구관리전환" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_factory01Off.gif" alt="컨설팅신청안내" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_foodOff.gif" alt="학교급식식재료" /></a>
+          <div class="subMenu" id="sub04" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                 <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_food01Off.gif" alt="식재료 구매·관리" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_food02Off.gif" alt="식재료 시장조사" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_food03Off.gif" alt="부적합 납품 업체" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_eduOff.gif" alt="영양,교육" /></a>
+          <div class="subMenu" id="sub05" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_edu01Off.gif" alt="영양·식생활교육" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_edu02Off.gif" alt="추천식단" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_edu03Off.gif" alt="추천레시피" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_edu04Off.gif" alt="학교급식특색활동" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_partOff.gif" alt="알림마당" /></a>
+          <div class="subMenu" id="sub06" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part01Off.gif" alt="학교급식인력풀" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part02Off.gif" alt="영양(교)사이야기" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part03Off.gif" alt="조리(원)사이야기" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part04Off.gif" alt="자유게시판" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_part04Off.gif" alt="설문조사" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu last"><a href="#"><img src="../images/header/common/mm_noticeOff.gif" alt="정보마당" /></a>
+          <div class="subMenu" id="sub07" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="급식소식" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="연수·행사" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="업무자료실" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="관련법규" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="FAQ" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- //header--> 
+  
+  <!-- container-->
+  <div id="container">
+    <div id="contents">
+      <h2>메인내용</h2>
+      <p><img src="../images/sub/info/sub_vimg_01.jpg" alt="건강한 급식 행복한 학교" /></p>
+      <ul class="lnb">
+        <li><img src="../images/sub/notice/sub_title_01.gif" alt="정보마당" /></li>
+        <li><a href="#"><img src="../images/sub/notice/sub_stitle_01Off.gif" alt="급식소식" /></a></li>
+        <li><a href="#"><img src="../images/sub/notice/sub_stitle_02Off.gif" alt="연수·행사" /></a></li>
+        <li><a href="#"><img src="../images/sub/notice/sub_stitle_03Off.gif" alt="업무자료실" /></a></li>
+        <li><a href="#"><img src="../images/sub/notice/sub_stitle_04On.gif" alt="관련법규" /></a></li>
+        <li><a href="#"><img src="../images/sub/notice/sub_stitle_05Off.gif" alt="FAQ" /></a></li>
+      </ul>
+      <div class="right_box">
+        <p><img src="../images/sub/notice/title_05.gif" alt="급식기구관리전환" /></p>
+        <p class="history"><img src="../images/sub/history_home.gif" alt="home" /> 정보마당 <img src="../images/sub/history_arrow.gif" alt="다음" /> <strong>관련법규</strong></p>
+          
+          <p class="pt30"></p>
+          <div class="laws">           
+           <ul>
+           	<li class="top"><img src="../images/sub/notice/img_01.gif" alt="학교급식" /></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%ED%95%99%EA%B5%90%EA%B8%89%EC%8B%9D%EB%B2%95&x=0&y=0#liBgcolor0">학교급식법</a></li>
+            <li><a href="#">서울특별시 친환경 무상급식 등 지원에 <br />관한 조례</a></li>
+            <li><a href="#">서울특별시교육청 방사능 등<br />유해물질로부터 안전한 식재료<br />공급에 관한 조례</a></li>
+           </ul>
+           
+           <ul>
+           	<li class="top"><img src="../images/sub/notice/img_02.gif" alt="학교급식" /></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EB%82%99%EB%86%8D%EC%A7%84%ED%9D%A5%EB%B2%95&x=0&y=0#liBgcolor0">낙농진흥법</a></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EB%86%8D%EC%88%98%EC%82%B0%EB%AC%BC%EC%9D%98+%EC%9B%90%EC%82%B0%EC%A7%80+%ED%91%9C%EC%8B%9C%EC%97%90+%EA%B4%80%ED%95%9C+%EB%B2%95%EB%A5%A0&x=0&y=0#liBgcolor0">농수산물의 원산지 표시에 관한 법률</a></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EB%86%8D%EC%88%98%EC%82%B0%EB%AC%BC+%ED%92%88%EC%A7%88%EA%B4%80%EB%A6%AC%EB%B2%95&x=0&y=0#liBgcolor1">농수산물 품질관리법</a></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EB%86%8D%EC%96%B4%EC%97%85%C2%B7%EB%86%8D%EC%96%B4%EC%B4%8C+%EB%B0%8F+%EC%8B%9D%ED%92%88%EC%82%B0%EC%97%85+%EA%B8%B0%EB%B3%B8%EB%B2%95&x=0&y=0">농어업·농어촌 및 식품산업 기본법</a></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EC%8B%9D%ED%92%88%EC%9C%84%EC%83%9D%EB%B2%95&x=0&y=0#liBgcolor1">식품위생법</a></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EC%8B%9D%ED%92%88%EC%95%88%EC%A0%84%EA%B8%B0%EB%B3%B8%EB%B2%95&x=0&y=0#liBgcolor0">식품안전기본법</a></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EC%B6%95%EC%82%B0%EB%B2%95&x=0&y=0#liBgcolor0">축산법</a></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EC%B6%95%EC%82%B0%EB%AC%BC+%EC%9C%84%EC%83%9D%EA%B4%80%EB%A6%AC%EB%B2%95&x=0&y=0#liBgcolor1">축산물위생관리법</a></li>
+           </ul>
+           
+           <p class="cb"></p>
+           
+           <ul>
+           	<li class="top"><img src="../images/sub/notice/img_03.gif" alt="학교급식" /></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EA%B0%90%EC%97%BC%EB%B3%91%EC%9D%98+%EC%98%88%EB%B0%A9+%EB%B0%8F+%EA%B4%80%EB%A6%AC%EC%97%90+%EA%B4%80%ED%95%9C+%EB%B2%95%EB%A5%A0&x=0&y=0#liBgcolor0">감염병의 예방 및 관리에 관한 법률</a></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EA%B3%B5%EA%B3%B5%EA%B8%B0%EA%B4%80%EC%9D%98++%EC%86%8C%EB%B0%A9%EC%95%88%EC%A0%84%EA%B4%80%EB%A6%AC%EC%97%90+%EA%B4%80%ED%95%9C+%EA%B7%9C%EC%A0%95&x=0&y=0#liBgcolor0">공공기관의  소방안전관리에 관한 규정</a></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EB%8F%84%EC%8B%9C%EA%B0%80%EC%8A%A4%EC%82%AC%EC%97%85%EB%B2%95&x=0&y=0#liBgcolor1">도시가스사업법</a></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EC%82%B0%EC%97%85%EC%95%88%EC%A0%84%EB%B3%B4%EA%B1%B4%EB%B2%95&x=0&y=0#liBgcolor1">산업안전보건법</a></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EC%8A%B9%EA%B0%95%EA%B8%B0%EC%8B%9C%EC%84%A4+%EC%95%88%EC%A0%84%EA%B4%80%EB%A6%AC%EB%B2%95&x=0&y=0#liBgcolor0">승강기시설 안전관리법</a></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EC%95%A1%ED%99%94%EC%84%9D%EC%9C%A0%EA%B0%80%EC%8A%A4%EC%9D%98+%EC%95%88%EC%A0%84%EA%B4%80%EB%A6%AC+%EB%B0%8F+%EC%82%AC%EC%97%85%EB%B2%95&x=0&y=0#liBgcolor0">액화석유가스의 안전관리 및 사업법에너지이용 합리화법</a></li>
+           </ul>
+           
+           <ul>
+           	<li class="top"><img src="../images/sub/notice/img_04.gif" alt="학교급식" /></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EA%B5%AD%EA%B0%80%EB%A5%BC+%EB%8B%B9%EC%82%AC%EC%9E%90%EB%A1%9C+%ED%95%98%EB%8A%94+%EA%B3%84%EC%95%BD%EC%97%90+%EA%B4%80%ED%95%9C+%EB%B2%95%EB%A5%A0&x=0&y=0#liBgcolor1">국가를 당사자로 하는 계약에 관한 법률</a></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EC%A7%80%EB%B0%A9%EC%9E%90%EC%B9%98%EB%8B%A8%EC%B2%B4%EB%A5%BC+%EB%8B%B9%EC%82%AC%EC%9E%90%EB%A1%9C+%ED%95%98%EB%8A%94+%EA%B3%84%EC%95%BD%EC%97%90+%EA%B4%80%ED%95%9C+%EB%B2%95%EB%A5%A0&x=0&y=0#liBgcolor1">지방자치단체를 당사자로 하는 계약에 <br />관한 법률</a></li>
+           </ul>
+           
+            <p class="cb"></p>
+           
+           <ul>
+           	<li class="top"><img src="../images/sub/notice/img_05.gif" alt="학교급식" /></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EA%B7%BC%EB%A1%9C%EA%B8%B0%EC%A4%80%EB%B2%95&x=0&y=0#liBgcolor0">근로기준법</a></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EB%86%8D%EC%96%B4%EC%97%85%EA%B2%BD%EC%98%81%EC%B2%B4+%EC%9C%A1%EC%84%B1+%EB%B0%8F+%EC%A7%80%EC%9B%90%EC%97%90+%EA%B4%80%ED%95%9C+%EB%B2%95%EB%A5%A0&x=0&y=0#liBgcolor0">농어업경영체 육성 및 지원에 관한 법률</a></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EC%82%AC%EB%A3%8C%EA%B4%80%EB%A6%AC%EB%B2%95&x=0&y=0#liBgcolor0">사료관리법</a></li>
+            <li><a href="http://www.law.go.kr/lsSc.do?menuId=0&subMenu=1&query=%ED%8F%90%EA%B8%B0%EB%AC%BC%EA%B4%80%EB%A6%AC%EB%B2%95#liBgcolor3">폐기물관리법</a></li>
+           </ul>
+           
+          </div>
+          
+      </div>
+               
+      <p class="bottom_bg"></p>
+    </div>
+  </div>
+  <!-- //container-->
+  
+  <div id="footer">
+    <h2>하단</h2>
+    <address>
+    110-781) 서울특별시 종로구 송월길 48(신문로 2-77)
+    </address>
+    <p>COPYRIGHT(C) 2013 <b>SEOUL metropolitan office of education</b> ALL RIGHT RESERVED</p>
+    <ul>
+      <li class="bn"><a href="#">개인정보보호정책</a></li>
+      <li><a href="#">이메일 무단수집거부</a></li>
+      <li><a href="#">뷰어프로그램</a></li>
+      <li><a href="#">저작권보호</a></li>
+      <li><a href="#">서울학교급식 배너다운로드</a></li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

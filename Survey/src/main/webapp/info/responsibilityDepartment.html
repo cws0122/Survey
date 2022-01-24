@@ -1,0 +1,690 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>서울학교급식포털</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css" />
+<link href="../css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" >
+<!--
+
+	var flag1=true;
+	var flag2=true;
+	
+	$(document).ready(function(){
+		$(".mainMenu").each(function(index, item){
+			$(item).click(function(){
+				flag1=false;
+			});
+		});
+		
+		$(".subMenu").each(function(index, item){
+			$(item).click(function(){
+				flag1=true;
+				flag2=false;
+			});
+		});
+	});
+
+   function getElementsByClass(searchClass, node, tag) {
+     var classElements = new Array();
+     if ( node == null ) node = document;
+     if ( tag == null ) tag = '*';
+     var els = node.getElementsByTagName(tag);
+     var elsLen = els.length;
+     var pattern = new RegExp("(^|\\s)"+searchClass+"(\\s|$)");
+     for (i = 0, j = 0; i < elsLen; i++) {
+      if ( pattern.test(els[i].className) ) {
+        classElements[j] = els[i];
+        j++;
+      }
+    }
+    return classElements;
+  }
+
+  function menuHidden(menu, sub) {
+    menu.src = menu.src.replace("On", "Off");
+    sub.style.display = "none";
+  }
+
+  function setEvtGnb() {
+    var mainMenu = getElementsByClass("mainMenu");
+    var prevMenu1, prevSub1, isHid1, prevMenu2, isHid2;
+	
+	var subMenu = getElementsByClass("subMenu");
+	
+    for (var i=0; i<mainMenu.length; i++) {
+      (function (pos){
+        mainMenu[pos].getElementsByTagName("img")[0].onmouseover = function(){
+          if(prevMenu1) menuHidden(prevMenu1, prevSub1);
+          prevMenu1 = this;
+          this.src = this.src.replace("Off", "On");
+          prevSub1 = document.getElementById("sub"+("0"+(pos+1)).match(/..$/));
+          prevSub1.style.display = "block";
+        };
+    
+        mainMenu[pos].onmouseout = function(e){
+          var bool, e= e || event;
+          (function (obj, tobj) {
+            var childs = obj.childNodes;
+            for (var x=0; x<childs.length; x++) {
+              if(childs[x] == tobj) bool = true;
+              else arguments.callee(childs[x], tobj);
+            }
+          })(this, document.elementFromPoint(e.clientX, e.clientY));
+          if(flag1){
+	          if(bool) return false;
+	          menuHidden(prevMenu1, prevSub1);
+          }
+        };
+      })(i);
+    }
+	
+	for (var j=0; j<subMenu.length; j++) {
+      (function (pos){
+        subMenu[pos].getElementsByTagName("img")[0].onmouseover = function(){
+          prevMenu2 = this;
+          this.src = this.src.replace("Off", "On");
+          prevSub2 = document.getElementById("sub"+("0"+(pos+1)).match(/..$/));
+       	  flag2=true;
+        };
+    
+        subMenu[pos].onmouseout = function(e){
+          var bool, e= e || event;
+          (function (obj, tobj) {
+            var childs = obj.childNodes;
+            for (var x=0; x<childs.length; x++) {
+              if(childs[x] == tobj) bool = true;
+              else arguments.callee(childs[x], tobj);
+            }
+          })(this, document.elementFromPoint(e.clientX, e.clientY));
+          if(flag2){
+	          if(bool) return false;
+	          menuHidden(prevMenu2, prevSub2);
+          }
+        };
+      })(j);
+    }
+  }
+ 
+  window.onload = function() {
+    setEvtGnb();
+  }
+//-->
+</script>
+<script type="text/javascript">
+initPage = function() {
+	
+};
+
+doGoTab = function(thisObject, tab) {
+	$(".info_tab").find(">li>a").each(function(index, el) {
+		$(el).removeClass("info_tab0"+(index+1)+"_on");
+		$(el).addClass("info_tab0"+(index+1));
+	});
+	$(thisObject).addClass("info_tab"+tab+"_on");
+	if("01"==tab){
+		$("#tab02").hide();
+		$("#tab01").show();
+	}else{
+		$("#tab01").hide();
+		$("#tab02").show();
+	}
+	
+};
+</script>
+</head>
+<body>
+<div id="wrap">
+<!--skip S-->
+<ul id="skipnavi">
+  <li><a href="#gnb">주메뉴 바로가기</a></li>
+  <li><a href="#contents">메인내용 바로가기</a></li>
+  <li><a href="#footer">하단 바로가기</a></li>
+</ul>
+<!--skip E--> 
+
+<!-- header-->
+<div id="header">
+  <h1><img src="../images/header/common/logo.gif" alt="서울학교급식포털" /></h1>
+  <div class="topmenu">
+    <ul>
+      <li class="bn"><a href="#">HOME</a></li>
+      <li><a href="#">SITEMAP</a></li>
+      <li class="bn"> <a href="#"><img src="../images/header/common/btn_login.gif" alt="로그인" /></a></li>
+    </ul>
+  </div>
+  <div id="gnb">
+    <h2>주메뉴</h2>
+    <ul class="MM">
+      <li class="mainMenu first"><a href="#"><img src="../images/header/common/mm_infoOff.gif" id="sel1" alt="서울학교급식소개" /></a>
+        <div class="subMenu" id="sub01" style="display:none;">
+          <div class="boxSR">
+            <ul class="boxSM">
+              <li class="left_bg"></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_info01Off.gif" alt="인사말" /></a></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_info02Off.gif" alt="학교급식기본방향" /></a></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_info03Off.gif" alt="학교급식현황" /></a></li>
+              <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_info04Off.gif" alt="학교급식 담당부서" /></a></li>
+              <li class="right_bg"></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_safetyOff.gif" alt="학교급식위생안전" /></a>
+        <div class="subMenu" id="sub02" style="display:none;">
+          <div class="boxSR">
+            <ul class="boxSM">
+              <li class="left_bg"></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_safety01Off.gif" alt="학교급식 위생관리" /></a></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_safety02Off.gif" alt="식중독 대처요령" /></a></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_safety03Off.gif" alt="안전사고예방" /></a></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_safety04Off.gif" alt="안전사고 대처요령" /></a></li>
+              <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_safety05Off.gif" alt="위생.안전성 검사결과" /></a></li>
+              <li class="right_bg"></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_factoryOff.gif" alt="학교급식시설관리" /></a>
+        <div class="subMenu" id="sub03" style="display:none;">
+          <div class="boxSR">
+            <ul class="boxSM">
+              <li class="left_bg"></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_factory01Off.gif" alt="급식환경개선사업" /></a></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_factory01Off.gif" alt="급식시설개선사례" /></a></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_factory01Off.gif" alt="급식기구관리전환" /></a></li>
+              <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_factory01Off.gif" alt="컨설팅신청안내" /></a></li>
+              <li class="right_bg"></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_foodOff.gif" alt="학교급식식재료" /></a>
+        <div class="subMenu" id="sub04" style="display:none;">
+          <div class="boxSR">
+            <ul class="boxSM">
+              <li class="left_bg"></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_food01Off.gif" alt="식재료 구매·관리" /></a></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_food02Off.gif" alt="식재료 시장조사" /></a></li>
+              <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_food03Off.gif" alt="부적합 납품 업체" /></a></li>
+              <li class="right_bg"></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_eduOff.gif" alt="영양,교육" /></a>
+        <div class="subMenu" id="sub05" style="display:none;">
+          <div class="boxSR">
+            <ul class="boxSM">
+              <li class="left_bg"></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_edu01Off.gif" alt="영양·식생활교육" /></a></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_edu02Off.gif" alt="추천식단" /></a></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_edu03Off.gif" alt="추천레시피" /></a></li>
+              <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_edu04Off.gif" alt="학교급식특색활동" /></a></li>
+              <li class="right_bg"></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_partOff.gif" alt="참여마당" /></a>
+        <div class="subMenu" id="sub06" style="display:none;">
+          <div class="boxSR">
+            <ul class="boxSM">
+              <li class="left_bg"></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part01Off.gif" alt="학교급식인력풀" /></a></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part02Off.gif" alt="영양(교)사이야기" /></a></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part03Off.gif" alt="조리(원)사이야기" /></a></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part04Off.gif" alt="자유게시판" /></a></li>
+              <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_part04Off.gif" alt="설문조사" /></a></li>
+              <li class="right_bg"></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="mainMenu last"><a href="#"><img src="../images/header/common/mm_noticeOff.gif" alt="알림마당" /></a>
+        <div class="subMenu" id="sub07" style="display:none;">
+          <div class="boxSR">
+            <ul class="boxSM">
+              <li class="left_bg"></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="급식소식" /></a></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="연수·행사" /></a></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="업무자료실" /></a></li>
+              <li class="subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="관련법규" /></a></li>
+              <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="FAQ" /></a></li>
+              <li class="right_bg"></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- //header--> 
+
+<!-- container-->
+<div id="container">
+  <div id="contents">
+    <h2>메인내용</h2>
+    <p><img src="../images/sub/info/sub_vimg_01.jpg" alt="건강한 급식 행복한 학교" /></p>
+    <ul class="lnb">
+      <li><img src="../images/sub/info/sub_title_01.gif" alt="서울학교 급식소개" /></li>
+      <li><a href="#"><img src="../images/sub/info/sub_stitle_01Off.gif" alt="인사말" /></a></li>
+      <li><a href="#"><img src="../images/sub/info/sub_stitle_02On.gif" alt="학교급식기본방향" /></a></li>
+      <li><a href="#"><img src="../images/sub/info/sub_stitle_03Off.gif" alt="학교급식현황" /></a></li>
+      <li><a href="#"><img src="../images/sub/info/sub_stitle_04Off.gif" alt="학교급식담당부서" /></a></li>
+    </ul>
+    <div class="right_box">
+      <h3><img src="../images/sub/info/title_03.gif" alt="학교급식담당부서" /></h3>
+      <p class="history"><img src="../images/sub/history_home.gif" alt="home" /> 서울학교 급식소개 <img src="../images/sub/history_arrow.gif" alt="다음" /> <strong>학교급식담당부서</strong></p>
+      <p class="pt30"></p>
+      
+      <!--tab object -->
+      <ul class="info_tab">
+        <li><a href="javascript:void(0)" onclick="doGoTab(this,'01');" class="info_tab01_on">조직도</a></li>
+        <li><a href="javascript:void(0)" onclick="doGoTab(this,'02');" class="info_tab02">업무분장</a></li>
+      </ul>
+      <!--//tab object -->
+      
+      <div id="tab01" class="tabDivArea">
+        <p class="line"></p>
+        <div class="respon_box">
+          <ul>
+            <li><a href="http://buseo.sen.go.kr/web/services/page/viewPage.action?page=kor/station/guide/guide_14.html" target="_blank"><img src="../images/sub/info/responsibility_01.gif" alt="서울특별시교육청 체육건강청소년과" /></a>
+              <ul class="respon_01">
+                <li><img src="../images/sub/info/responsibility_s01.gif" alt="급식기획팀" /></li>
+                <li><img src="../images/sub/info/responsibility_s02.gif" alt="급식운영팀" /></li>
+              </ul>
+            </li>
+            <li class="pr400"><a href="http://www.bogun.seoul.kr/" target="_blank"><img src="../images/sub/info/responsibility_02.gif" alt="서울특별시 학교보건진흥원" /></a>
+              <ul>
+                <li class="pt10"><img src="../images/sub/info/responsibility_s03.gif" alt="급식지원과" />
+                  <ul class="respon_02">
+                    <li><img src="../images/sub/info/responsibility_s04.gif" alt="급식지원팀" /></li>
+                    <li><img src="../images/sub/info/responsibility_s05.gif" alt="급식관리팀" /></li>
+                    <li><img src="../images/sub/info/responsibility_s06.gif" alt="교육연수팀" /></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="pt300"><img src="../images/sub/info/responsibility_03.gif" alt="지역교육지원청" />
+              <ul class="respon_03">
+                <li><a href="http://www.sendb.go.kr/" target="_blank"><img src="../images/sub/info/responsibility_s07.gif" alt="동부" /></a></li>
+                <li><a href="http://www.sens.go.kr/" target="_blank"><img src="../images/sub/info/responsibility_s08.gif" alt="서부" /></a></li>
+                <li><a href="http://www.nambuedu.seoul.kr/" target="_blank"><img src="../images/sub/info/responsibility_s09.gif" alt="남부" /></a></li>
+                <li><a href="http://www.ben.go.kr/" target="_blank"><img src="../images/sub/info/responsibility_s10.gif" alt="북부" /></a></li>
+                <li><a href="http://www.senjb.go.kr/" target="_blank"><img src="../images/sub/info/responsibility_s11.gif" alt="중부" /></a></li>
+                <li><a href="http://www.edugd.seoul.kr/" target="_blank"><img src="../images/sub/info/responsibility_s12.gif" alt="강동" /></a></li>
+                <li><a href="http://www.sengs.go.kr/" target="_blank"><img src="../images/sub/info/responsibility_s13.gif" alt="강서" /></a></li>
+                <li><a href="http://www.knen.go.kr/" target="_blank"><img src="../images/sub/info/responsibility_s14.gif" alt="강남" /></a></li>
+                <li><a href="http://www.djedu.go.kr/" target="_blank"><img src="../images/sub/info/responsibility_s15.gif" alt="동작" /></a></li>
+                <li><a href="http://www.sensd.go.kr/" target="_blank"><img src="../images/sub/info/responsibility_s16.gif" alt="성동" /></a></li>
+                <li><a href="http://www.sensb.go.kr/" target="_blank"><img src="../images/sub/info/responsibility_s17.gif" alt="성북" /></a></li>
+                <li class="left"><img src="../images/sub/info/responsibility_s23.gif" alt="학교급식운영 및 위생·안전 지도 점검,학교급식 시설개선사업,학교급식 위생사고 발생 처리 및 예방 관리,학교급식 영양관리 및 식생활 지도,학교급식 모니터단 운영," /></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!--//tab object -->
+      <div id="tab02" class="tabDivArea" style="display:none;">
+        <p class="line"></p>
+        <p class="pt30"></p>
+        <h3><img src="../images/sub/info/h3_07.gif" alt="서울특별시교육청 체육건강청소년과" /></h3>
+        <div class="tbl_box">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tbl_type02" summary="업무분장">
+            <caption>
+            업무분장
+            </caption>
+            <colgroup>
+            <col width="20%"/>
+            <col width="15%"/>
+            <col width="15%"/>
+            <col width="*%"/>
+            <col width="13%"/>
+            </colgroup>
+            <tbody>
+            <thead>
+              <tr>
+                <th>소속(팀)</th>
+                <th>직위</th>
+                <th>성명</th>
+                <th>담당업무</th>
+                <th>연락처</th>
+              </tr>
+            </thead>
+            <tr>
+              <th>체육건강청소년과</th>
+              <td>과장</td>
+              <td>김동식</td>
+              <td class="tl"><ul class="t_txt">
+              <li>체육건강청소년과 업무 총괄</li></ul></td>
+              <td>02-3999-599</td>
+            </tr>
+            <tr>
+              <th>급식기획팀</th>
+              <td>사무관</td>
+              <td>최윤세</td>
+              <td class="tl"><ul class="t_txt">
+              <li>학교급식 기획 업무 총괄</li></ul> </td>
+              <td>02-3999-586</td>
+            </tr>
+             <tr>
+              <th>급식기획팀</th>
+              <td>장학사</td>
+              <td>권순주</td>
+              <td class="tl">
+              <ul class="t_txt">
+              	<li>학교급식 장학에 관한 업무</li>
+                <li>영양교육 및 식생활교육 운영에 관한 업무</li>
+                <li>학교급식 연구·시범학교 지정 및 운영 지도<br /> 비만예방 컨설팅 및 부모교육</li>
+              </ul></td>
+               <td>02-3999-582</td>     
+            </tr>
+            <tr>
+              <th>급식기획팀</th>
+              <td>주무관</td>
+              <td>박연희</td>
+              <td class="tl">
+               <ul class="t_txt">
+              	<li>학교급식 기본정책 수립 및 제도개선</li>
+                <li>무상급식 계획수립 및 지방자치단체 <br />업무 협력</li>
+                <li>학교급식 정책 연구 및 조사 지원<br />식재료 유통·구매 업무지원</li>
+              </ul></td>
+              <td>02-3999-587</td>
+            </tr>
+            <tr>
+              <th>급식기획팀</th>
+              <td>주무관</td>
+              <td>이진성</td>
+              <td class="tl">
+               <ul class="t_txt">
+              	<li>식재료 유통·구매 정책기획</li>
+                <li>식재료 구매 실태조사 및 점검</li>
+                <li>식재료 유통·공급 지원체계 수립</li>
+                <li>식재료 구매방법 제도개선</li>
+                <li>급식지원센터 업무 협조․조정</li>
+                <li>학교급식 식재료 유통·구매 정책 업무조정</li>
+                <li>지방자치단체 등 대외기관 협력산지 실태조사 및 관련자료 수집분석</li>
+              </ul>
+              </td>
+                 <td>02-3999-088</td>
+            </tr>
+            <tr>
+              <th>급식기획팀</th>
+              <td>주무관</td>
+              <td>유인경</td>
+              <td class="tl">
+              <ul class="t_txt">
+              	<li>학교급식 실태조사를 위한 현장 점검·평가</li>
+                <li>학교급식 만족도 조사·관리</li>
+                <li>학교급식 정책 홍보 및 현장 소통</li>
+                <li>식재료 유통․구매 업무지원 </li>
+              </ul></td>
+                 <td>02-3999-588</td>
+            </tr>
+            <tr>
+              <th>급식운영팀</th>
+              <td>사무관</td>
+              <td>이경영</td>
+              <td class="tl">
+              <ul class="t_txt">
+              	<li>학교급식 실태조사를 위한 현장 점검·평가</li>
+                <li>학교급식 만족도 조사·관리</li>
+                <li>학교급식 정책 홍보 및 현장 소통</li>
+                <li>식재료 유통․구매 업무지원  </li>
+              </ul></td>
+                 <td>02-3999-581</td>
+            </tr>
+            <tr>
+              <th>급식운영팀</th>
+              <td>주무관</td>
+              <td>최인수</td>
+              <td class="tl">
+              
+              <ul class="t_txt">
+              	<li>신설학교 급식 추진에 관한 업무</li>
+                <li>학교급식위원회 운영에 관한 업무</li>
+                <li>학교급식 시설예산 편성 및 결산 업무</li>
+                <li>학교급식유공자(교) 표창에 관한 업무 </li>
+              </ul></td>
+                 <td>02-3999-593</td>
+            </tr>
+            <tr>
+              <th>급식운영팀</th>
+              <td>주무관</td>
+              <td>이민학</td>
+              <td class="tl">
+              
+              <ul class="t_txt">
+              	<li>학교급식 위생·안전 관리</li>
+                <li>학교급식 안전사고(식중독) 예방 및 <br />대응조치</li>
+                <li>학교급식 위생·안전 점검단 운영</li>
+                <li>학교급식 안전성 검사 업무 </li>
+                <li>학교 우유급식에 관한 업무 </li>
+              </ul></td>
+                 <td>02-3999-584</td>
+            </tr>
+            <tr>
+              <th >급식운영팀</th>
+              <td>주무관</td>
+              <td>안태길</td>
+              <td class="tl">
+              <ul class="t_txt">
+              <li>비정규직 노조 단체교섭 및 이행 업무</li>
+              <li>조리종사원 배치기준 및 인력풀제 운영</li>
+              <li>비정규직 처우개선 업무</li>
+              <li>조리종사원 산업보건 업무</li>
+              <li>비정규직 인건비 교부 및 결산 </li>
+              </ul>
+              
+              </td>
+                 <td>02-3999-089</td>
+            </tr>
+             <tr>
+              <th>급식운영팀</th>
+              <td>주무관</td>
+              <td>나수정</td>
+              <td class="tl">
+              <ul class="t_txt">
+              <li>우수 식재료 사용 구매·계약 관리 업무</li>
+              <li>식재료 품질관리 업무</li>
+              <li>식재료 납품업체 점검 업무</li>
+              <li>무상급식비 교부 및 결산</li>
+              <li>학교급식 현황 보고 등에 관한 업무</li>
+              </ul>
+              </td>
+              <td>02-3999-583</td>
+            </tr>
+              </tbody>
+            
+          </table>
+          </div>
+          
+          <p class="pt30"></p>
+        <h3><img src="../images/sub/info/h3_05.gif" alt="서울특별시학교보건진흥원 급식지원과" /></h3>
+        <div class="tbl_box">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tbl_type02" summary="서울특별시학교보건진흥원 급식지원과">
+            <caption>
+            서울특별시학교보건진흥원 급식지원과
+            </caption>
+            <colgroup>
+            <col width="20%"/>
+            <col width="*"/>
+            <col width="23%"/>
+            </colgroup>
+            <tbody>
+            <thead>
+              <tr>
+                <th>소속(팀)</th>
+                <th>담당업무</th>
+                <th>연락처</th>
+              </tr>
+            </thead>
+            <tr>
+              <th>급식지원팀</th>
+              <td class="tl">
+              <ul class="t_txt">
+              <li>학교급식 시설·설비 개선 지도 및 기술 지원</li>
+               <li>학교급식 관련 연구사업</li>
+                <li>학교급식 자료 개발·보급</li>
+                 <li>식재료 시장조사 및 구매지원 관련 업무</li>
+                  <li>학교급식 조리종사원 조리실습 교육</li>
+                   <li>학교급식 정보지원 사업</li>
+                    <li>학교급식 조리경연대회</li>
+              </ul>
+                </td>
+              <td>02-3999-693~6</td>
+            </tr>
+            <tr>
+              <th>급식관리팀</th>
+              <td class="tl">
+              <ul class="t_txt">
+              <li>식품위생분석실 운영 및 관리</li>
+              <li>학교급식 미생물 검사</li>
+              <li>학교급식 HACCP검증 검사</li>
+              <li>학교급식 안전성 검사</li>
+              <li>식중독 문자 서비스 발송</li>
+              </ul>
+          
+                </td>
+              <td>02-3999-691~2</td>
+            </tr>
+            <tr>
+              <th>교육연수팀</th>
+              <td class="tl">
+              <ul class="t_txt">
+              <li>학교급식 위생·안전 점검요원 연수</li>
+              <li>신규임용 영양(교)사 연수</li>
+              <li>영양교사 직무연수</li>
+              <li>식재료 납품업체 연수</li>
+              <li>학교급식 품질향상 세미나</li>
+              <li>영양(교)사 및 조리종사원 조리위생 아카데미</li>
+              <li>영양체험관 운영 </li>
+              <li>튼튼이 캠프 운영</li>
+              </ul></td>
+              <td>02-3999-697~8</td>
+            </tr>
+            </tbody>
+            </table>
+          </div>
+          
+          <p class="pt30"></p>
+        <h3><img src="../images/sub/info/h3_06.gif" alt="지역교육지원청" /></h3>
+        <div class="tbl_box">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tbl_type02" summary="지역교육지원청">
+            <caption>
+           지역교육지원청
+            </caption>
+            <colgroup>
+            <col width="20%"/>
+            <col width="24%"/>
+            <col width="20%"/>
+            <col width="*"/>
+            </colgroup>
+            <tbody>
+            <thead>
+              <tr>
+                <th>지역청명</th>
+                <th>관할지역</th>
+                <th>연락처</th>
+                <th>기타</th>
+              </tr>
+            </thead>
+            <tr>
+              <th>동부교육지원청</th>
+              <td>동대문구, 중랑구</td>
+              <td>02-2210-1291~4</td>
+              <td rowspan="11" class="tl">
+              <ul class="t_txt">
+              <li>학교급식운영 및 위생·안전 지도 점검</li>
+              <li>학교급식 시설개선사업</li>
+              <li>학교급식 위생사고 발생 처리 및 예방 관리</li>
+              <li>학교급식 영양관리 및 식생활 지도</li>
+              <li>학교급식 모니터단 운영</li>
+              </ul>
+             </td>
+            </tr>
+            <tr>
+              <th>서부교육지원청</th>
+              <td>마포구, 서대문구, 은평구</td>
+              <td>02-3905-591~5</td>             
+            </tr>
+            <tr>
+              <th>남부교육지원청</th>
+              <td>구로구, 금천구, 영등포구</td>
+              <td>02-2165-0291~5</td>             
+            </tr>
+            <tr>
+              <th>북부교육지원청</th>
+              <td>노원구, 도봉구</td>
+              <td>02-3499-6891~7</td>             
+            </tr>
+             <tr>
+              <th>중부교육지원청</th>
+              <td>용산구, 종로구, 중구</td>
+              <td>02-708-6567~9</td>             
+            </tr>
+            <tr>
+              <th>강동교육지원청</th>
+              <td>강동구, 송파구</td>
+              <td>02-3434-4384~9</td>             
+            </tr>
+            <tr>
+              <th>강서교육지원청</th>
+              <td>강서구, 양천구</td>
+              <td>02-2600-0890~4</td>             
+            </tr>
+            <tr>
+              <th>강남교육지원청</th>
+              <td>강남구, 서초구</td>
+              <td>02-3015-3353~7</td>             
+            </tr>
+            <tr>
+              <th>동작교육지원청</th>
+              <td>관악구, 동작구</td>
+              <td>02-810-8391~4</td>             
+            </tr>
+            <tr>
+              <th>성동교육지원청</th>
+              <td>광진구, 성동구</td>
+              <td>02-2286-3663~7</td>             
+            </tr>
+            <tr>
+              <th>성북교육지원청</th>
+              <td>강북구, 성북구</td>
+              <td>02-9449-361~4</td>             
+            </tr>
+            </tbody>
+            </table>
+        </div>
+        
+        </div>        
+        <!--//tab object --> 
+      </div>
+      <p class="bottom_bg"></p>
+    </div>
+  </div>
+  <!-- //container-->
+  
+  <div id="footer">
+    <h2>하단</h2>
+    <address>
+    110-781) 서울특별시 종로구 송월길 48(신문로 2-77)
+    </address>
+    <p>COPYRIGHT(C) 2013 <b>SEOUL metropolitan office of education</b> ALL RIGHT RESERVED</p>
+    <ul>
+      <li class="bn"><a href="#">개인정보보호정책</a></li>
+      <li><a href="#">이메일 무단수집거부</a></li>
+      <li><a href="#">뷰어프로그램</a></li>
+      <li><a href="#">저작권보호</a></li>
+      <li><a href="#">서울학교급식 배너다운로드</a></li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

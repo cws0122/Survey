@@ -1,0 +1,670 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>서울학교급식포털</title>
+<link href="../css/base.css" rel="stylesheet" type="text/css" />
+<link href="../css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+
+<script type="text/javascript" >
+<!--
+
+	var flag1=true;
+	var flag2=true;
+	
+	$(document).ready(function(){
+		$(".mainMenu").each(function(index, item){
+			$(item).click(function(){
+				flag1=false;
+			});
+		});
+		
+		$(".subMenu").each(function(index, item){
+			$(item).click(function(){
+				flag1=true;
+				flag2=false;
+			});
+		});
+	});
+
+   function getElementsByClass(searchClass, node, tag) {
+     var classElements = new Array();
+     if ( node == null ) node = document;
+     if ( tag == null ) tag = '*';
+     var els = node.getElementsByTagName(tag);
+     var elsLen = els.length;
+     var pattern = new RegExp("(^|\\s)"+searchClass+"(\\s|$)");
+     for (i = 0, j = 0; i < elsLen; i++) {
+      if ( pattern.test(els[i].className) ) {
+        classElements[j] = els[i];
+        j++;
+      }
+    }
+    return classElements;
+  }
+
+  function menuHidden(menu, sub) {
+    menu.src = menu.src.replace("On", "Off");
+    sub.style.display = "none";
+  }
+
+  function setEvtGnb() {
+    var mainMenu = getElementsByClass("mainMenu");
+    var prevMenu1, prevSub1, isHid1, prevMenu2, isHid2;
+	
+	var subMenu = getElementsByClass("subMenu");
+	
+    for (var i=0; i<mainMenu.length; i++) {
+      (function (pos){
+        mainMenu[pos].getElementsByTagName("img")[0].onmouseover = function(){
+          if(prevMenu1) menuHidden(prevMenu1, prevSub1);
+          prevMenu1 = this;
+          this.src = this.src.replace("Off", "On");
+          prevSub1 = document.getElementById("sub"+("0"+(pos+1)).match(/..$/));
+          prevSub1.style.display = "block";
+        };
+    
+        mainMenu[pos].onmouseout = function(e){
+          var bool, e= e || event;
+          (function (obj, tobj) {
+            var childs = obj.childNodes;
+            for (var x=0; x<childs.length; x++) {
+              if(childs[x] == tobj) bool = true;
+              else arguments.callee(childs[x], tobj);
+            }
+          })(this, document.elementFromPoint(e.clientX, e.clientY));
+          if(flag1){
+	          if(bool) return false;
+	          menuHidden(prevMenu1, prevSub1);
+          }
+        };
+      })(i);
+    }
+	
+	for (var j=0; j<subMenu.length; j++) {
+      (function (pos){
+        subMenu[pos].getElementsByTagName("img")[0].onmouseover = function(){
+          prevMenu2 = this;
+          this.src = this.src.replace("Off", "On");
+          prevSub2 = document.getElementById("sub"+("0"+(pos+1)).match(/..$/));
+       	  flag2=true;
+        };
+    
+        subMenu[pos].onmouseout = function(e){
+          var bool, e= e || event;
+          (function (obj, tobj) {
+            var childs = obj.childNodes;
+            for (var x=0; x<childs.length; x++) {
+              if(childs[x] == tobj) bool = true;
+              else arguments.callee(childs[x], tobj);
+            }
+          })(this, document.elementFromPoint(e.clientX, e.clientY));
+          if(flag2){
+	          if(bool) return false;
+	          menuHidden(prevMenu2, prevSub2);
+          }
+        };
+      })(j);
+    }
+  }
+ 
+  window.onload = function() {
+    setEvtGnb();
+  }
+//-->
+</SCRIPT>
+
+<script type="text/javascript">
+initPage = function() {
+	
+};
+
+doGoTab = function(thisObject, tab) {
+	$(".factory_tab").find(">li>a").each(function(index, el) {
+		$(el).removeClass("factory_tab0"+(index+1)+"_on");
+		$(el).addClass("factory_tab0"+(index+1));
+	});
+	$(thisObject).addClass("factory_tab"+tab+"_on");
+	if("01"==tab){
+		$("#tab02,#tab03").hide();
+		$("#tab01").show();
+	}else if("02"==tab){
+		$("#tab01,#tab03").hide();
+		$("#tab02").show();
+	
+	}else{
+		$("#tab01,#tab02").hide();
+		$("#tab03").show();
+	}
+};
+</script>
+</head>
+<body>
+<div id="wrap"> 
+  <!--skip S-->
+  <ul id="skipnavi">
+    <li><a href="#gnb">주메뉴 바로가기</a></li>
+    <li><a href="#contents">메인내용 바로가기</a></li>
+    <li><a href="#footer">하단 바로가기</a></li>
+  </ul>
+  <!--skip E--> 
+  
+  <!-- header-->
+  <div id="header">
+    <h1><img src="../images/header/common/logo.gif" alt="서울학교급식포털" /></h1>
+    <div class="topmenu">
+      <ul>
+        <li class="bn"><a href="#">HOME</a></li>
+        <li><a href="#">SITEMAP</a></li>
+        <li class="bn"> <a href="#"><img src="../images/header/common/btn_login.gif" alt="로그인" /></a></li>
+      </ul>
+    </div>
+    <div id="gnb">
+      <h2>주메뉴</h2>
+      <ul class="MM">
+        <li class="mainMenu first"><a href="#"><img src="../images/header/common/mm_infoOff.gif" id="sel1" alt="서울학교급식소개" /></a>
+         <div class="subMenu" id="sub01" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_info01Off.gif" alt="인사말" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_info02Off.gif" alt="학교급식기본방향" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_info03Off.gif" alt="학교급식현황" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_info04Off.gif" alt="학교급식 담당부서" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_safetyOff.gif" alt="학교급식위생안전" /></a>
+          <div class="subMenu" id="sub02" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_safety01Off.gif" alt="학교급식 위생관리" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_safety02Off.gif" alt="식중독 대처요령" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_safety03Off.gif" alt="안전사고예방" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_safety04Off.gif" alt="안전사고 대처요령" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_safety05Off.gif" alt="위생.안전성 검사결과" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_factoryOff.gif" alt="학교급식시설관리" /></a>
+          <div class="subMenu" id="sub03" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                 <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_factory01Off.gif" alt="급식환경개선사업" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_factory01Off.gif" alt="급식시설개선사례" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_factory01Off.gif" alt="급식기구관리전환" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_factory01Off.gif" alt="컨설팅신청안내" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_foodOff.gif" alt="학교급식식재료" /></a>
+          <div class="subMenu" id="sub04" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                 <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_food01Off.gif" alt="식재료 구매·관리" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_food02Off.gif" alt="식재료 시장조사" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_food03Off.gif" alt="부적합 납품 업체" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_eduOff.gif" alt="영양,교육" /></a>
+          <div class="subMenu" id="sub05" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_edu01Off.gif" alt="영양·식생활교육" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_edu02Off.gif" alt="추천식단" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_edu03Off.gif" alt="추천레시피" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_edu04Off.gif" alt="학교급식특색활동" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu"><a href="#"><img src="../images/header/common/mm_partOff.gif" alt="알림마당" /></a>
+          <div class="subMenu" id="sub06" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part01Off.gif" alt="학교급식인력풀" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part02Off.gif" alt="영양(교)사이야기" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part03Off.gif" alt="조리(원)사이야기" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part04Off.gif" alt="자유게시판" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_part04Off.gif" alt="설문조사" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="mainMenu last"><a href="#"><img src="../images/header/common/mm_noticeOff.gif" alt="정보마당" /></a>
+          <div class="subMenu" id="sub07" style="display:none;">
+            <div class="boxSR">
+              <ul class="boxSM">
+                <li class="left_bg"></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="급식소식" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="연수·행사" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="업무자료실" /></a></li>
+                <li class="subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="관련법규" /></a></li>
+                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_notice01Off.gif" alt="FAQ" /></a></li>
+                <li class="right_bg"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- //header--> 
+  
+  <!-- container-->
+  <div id="container">
+    <div id="contents">
+      <h2>메인내용</h2>
+      <p><img src="../images/sub/info/sub_vimg_01.jpg" alt="건강한 급식 행복한 학교" /></p>
+      <ul class="lnb">
+        <li><img src="../images/sub/factory/sub_title_01.gif" alt="학교급식시설관리" /></li>
+        <li><a href="#"><img src="../images/sub/factory/sub_stitle_01On.gif" alt="급식환경개선사업" /></a></li>
+        <li><a href="#"><img src="../images/sub/factory/sub_stitle_02Off.gif" alt="급식시설개선사례" /></a></li>
+        <li><a href="#"><img src="../images/sub/factory/sub_stitle_03Off.gif" alt="급식기구관리전환" /></a></li>
+        <li><a href="#"><img src="../images/sub/factory/sub_stitle_04Off.gif" alt="컨설팅신청안내" /></a></li>
+      </ul>
+      <div class="right_box">
+        <h3><img src="../images/sub/factory/title_01.gif" alt="급식환경개선사업" /></h3>
+        <p class="history"><img src="../images/sub/history_home.gif" alt="home" /> 학교급식시설관리 <img src="../images/sub/history_arrow.gif" alt="다음" /> <strong>급식환경개선사업</strong></p>
+        <p class="pt30"></p>
+        
+       
+       <!--tab object --> 
+         <ul class="factory_tab">
+ 			<li><a href="javascript:void(0)" onclick="doGoTab(this,'01');" class="factory_tab01_on">사업방향</a></li>
+			<li><a href="javascript:void(0)" onclick="doGoTab(this,'02');" class="factory_tab02">사업절차</a></li>
+            <li><a href="javascript:void(0)" onclick="doGoTab(this,'03');" class="factory_tab03">자료실</a></li>
+		 </ul>
+         <!--//tab object --> 
+        
+        <!--tab 01 -->
+        <div id="tab01" class="tabDivArea">
+            <p class="line"></p>
+            <p class="img_v"><img src="../images/sub/factory/img_03.gif" alt="사업방향" /></p>  
+            <p class="pt15"></p>
+          <h3><img src="../images/sub/factory/h3_01.gif" alt="사업개요" /></h3>
+          <p class="pt10 pb10"><img src="../images/sub/factory/img_10.gif" alt="근거" /></p>
+          <p class="pt10 pb30"><img src="../images/sub/factory/img_11.gif" alt="지원대상" /></p>
+           
+           <p class="pt10 cb"></p>
+            <h4 class="dot"><strong>급식 조리기계·기구 개선 및 확충사업</strong></h4> 
+            <div class="pt15 pb15 cb">                  
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tbl_type02" summary="급식 조리기계·기구 개선 및 확충사업">
+                    <caption>
+                    급식 조리기계·기구 개선 및 확충사업
+                    </caption>
+                    <colgroup>
+                    <col width="25%"/>
+                    <col width="*"/>
+                    <col width="15%"/>
+                    </colgroup>
+                    <tbody>
+                      <thead>
+                      <tr>
+                        <th>구 분</th>
+                        <th>지원 기준</th>
+                        <th>참고사항</th>
+                      </tr>
+                      </thead>
+                      <tr>
+                        <th>신설학교</th>
+                        <td class="tl">
+                        <ul class="t_txt">
+                        	<li>조리기구 구입 : 180,000천원</li>
+                            <li>식당비품 구입 : 40,000천원</li>
+                        </ul> </td>
+                        <td>학생수에 따라  <br />별도 지원가능</td>
+                      </tr>
+                      <tr>
+                        <th>노후기기교체 및 확충</th>
+                        <td class="tl">
+                        <ul class="t_txt">
+                        	<li>지원주기 : 각 기구별 내구연한 이상 사용</li>
+                           <li>조리기구별 구입연도, 노후도 및 내구연한에 따라 지원 -> 구입연도 고려</li>
+                           <li>위생 및 안전에 영향을 주는 기구 등 우선 지원</li></td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      </tbody>
+                     </table>
+             </div> 
+             
+             <h4 class="dot"><strong>급식 시설 개선 및 확충 사업</strong></h4> 
+            <div class="pt15 cb">                  
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tbl_type02" summary="급식 시설 개선 및 확충 사업">
+                    <caption>
+                    급식 시설 개선 및 확충 사업
+                    </caption>
+                    <colgroup>
+                    <col width="20%"/>
+                    <col width="18%"/>
+                    <col width="*"/>
+                    <col width="15%"/>
+                    </colgroup>
+                    <tbody>
+                      <thead>
+                      <tr>
+                        <th>구 분</th>
+                        <th colspan="2">지원 기준</th>
+                        <th>참고사항</th>
+                      </tr>
+                      </thead>
+                      <tr>
+                        <th>노후시설개선</th>
+                        <td class="tl" colspan="2">
+                        <ul class="t_txt">
+                        	<li>대상 : 10년이상 경과된 노후시설(장기 사용에 따른 시설 노후도 고려)</li>
+                            <li>급식시설 설치연도, 개·보수 연도 , 증·개축 연도와 노후도 고려 지원</li>
+                            <li>급식시설 미 구분·구획(전처리실, 조리실, 세척실) 학교 시설개선 지원<br />* 조리장 바닥 개보수 시 전처리실  구분·구획 가능여부 검토</li>
+                            
+                        </ul>
+                       
+                         </td>
+                        <td>학생수에 따라<br /> 별도 지원 가능</td>
+                      </tr>
+                      <tr>
+                        <th rowspan="3">급식시설 현대화</th>
+                        <td>(반)지하 급식실 이전</td>
+                        <td class="tl">
+                        <ul class="t_txt">
+                        	<li>지상이전 공간이 부족한 경우 썬큰(Sunken) 시설 적극 도입<br />
+							* 썬큰(Sunken) 시설 : 지하층 일부를 상부에 건물이 없게 설치하는 시설로서 지표면 아래에 공간을 조성하는 시설</li>
+                        </ul>
+                        
+                        </td>
+						<td>&nbsp;</td>
+                      </tr>
+                      
+                      <tr>
+                        <td>경량구조 개선</td>
+                        <td class="tl"> <ul class="t_txt">
+                        	<li>화재위험성, 건축자재 부식, 단열 미흡으로 내부 온도 유지가<br /> 어려운 경우</li>
+                            </ul></td>
+						<td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td>학생식당설치</td>
+                        <td class="tl">
+                         <ul class="t_txt">
+                        	<li>유휴(공간)교실을 식당으로 전환 가능한 학교 지원<br />(학생수용계획 고려)</li>
+                              <li>조리실이 노후된 경우 다목적 건물 증축 시 병행 추진 검토</li>
+                              </ul></td>
+						<td>&nbsp;</td>
+                      </tr>
+                      </tbody>
+                     </table>
+             </div>        
+         
+            
+        </div>
+        <!--//tab 01 -->
+        
+         <!--tab 02 --> 
+        <div id="tab02" class="tabDivArea" style="display:none;">
+         <p class="line"></p>
+         <div class="pb15 cb">                  
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tbl_type02" summary="급식 조리기계·기구 개선 및 확충사업">
+                    <caption>
+                    급식 조리기계·기구 개선 및 확충사업
+                    </caption>
+                    <colgroup>
+                    <col width="15%"/>
+                    <col width="*"/>
+                    <col width="44%"/>
+                    </colgroup>
+                    <tbody>
+                      <thead>
+                      <tr>
+                        <th>시  기</th>
+                        <th colspan="2">추  진  사  항</th>
+                      </tr>
+                      </thead>
+                      <tr>
+                        <th>1월, 6월</th>
+                        <td class="tl">급식환경개선사업 계획 수립(학교, 교육청)</td>
+                        <td class="tl">
+                        <strong>급식시설·기구 현황 점검 및 개선 계획 수립</strong><br />
+                          - 노후도, 사업부지, 추진방법 등 검토 <br />
+                          - 식당배식 전환 가능 여부 검토
+                        </td>
+                      </tr>
+                      <tr>
+                       <td colspan="3"><img src="../images/sub/arrow.gif" alt="" /></td>
+                      </tr>
+                      <tr>
+                        <th rowspan="2">3월, 7월</th>
+                        <td class="tl">소요예산 파악(학교, 교육청)</td>
+                        <td class="tl">&nbsp;</td>
+                      </tr>                  
+                      
+                      
+                       <tr>
+                        <td class="tl">소요예산 신청서 제출(학교)</td>
+                        <td class="tl"><strong>급식시설 신증축 및 전면 개보수 사업 신청 시 <br />지역교육청과 사전 협의 : 시설사업 가능 여부, 예상 사업비 등</strong><br /></td>
+                      </tr>
+                       <tr>
+                       <td colspan="3"><img src="../images/sub/arrow.gif" alt="" /></td>
+                      </tr>
+                      
+                      
+                      <tr>
+                        <th rowspan="2">4월, 8월</th>
+                        <td class="tl">사업비 신청내역 검토(교육청)</td>
+                        <td class="tl"><strong>필요 시 현장확인 실시(신증축 사업 등)</strong></td>
+                      </tr>
+                       <tr>
+                        <td class="tl">학교급식시설개선 협의회 개최(교육청)</td>
+                        <td class="tl"><strong>사업타당성, 예산규모 적정성 및 지원 우선순위    결정 등</strong><br /></td>
+                      </tr>
+                      
+                       <tr>
+                       <td colspan="3"><img src="../images/sub/arrow.gif" alt="" /></td>
+                      </tr>
+                      <tr>
+                        <th>8월, 12~1월</th>
+                        <td class="tl">예산편성 및 교부</td>
+                        <td class="tl">
+                        <strong>예산지원 규모 검토 및 지원 확정</strong></td>
+                      </tr>
+                      </tbody>
+                     </table>
+             </div>
+             <p class="pt15"></p>
+              <h3><img src="../images/sub/factory/h3_02.gif" alt="단위 학교의 사업시행 흐름도" /></h3>
+             <p class="pt15 pb30"><img src="../images/sub/factory/img_04.gif" alt="단위 학교의 사업시행 흐름도 내용" /></p>  
+             
+             <h3><img src="../images/sub/factory/h3_03.gif" alt="학교현장별 실무 추진계획 수립" /></h3>
+             <p class="pt15 pb30"><img src="../images/sub/factory/img_08.gif" alt="현대화 사업 기본계획 수립" /></p>  
+             <p class="pt15 pb30"><img src="../images/sub/factory/img_09.gif" alt="예산배정에 따른 사업일정 계획" /></p>  
+             
+         </div>
+         <!--//tab 02 -->
+         
+          <!--tab 03 --> 
+        <div id="tab03" class="tabDivArea" style="display:none;">
+          <div class="tbl_box">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tbl_type01" summary="자료실">
+            <caption>
+            자료실
+            </caption>
+            <colgroup>
+            <col width="8%"/>
+            <col width="*%"/>
+            <col width="10%"/>
+            <col width="15%"/>
+            <col width="15%"/>
+            <col width="10%"/>
+            </colgroup>
+            <tbody>
+              <tr>
+                <th>NO</th>
+                <th>제목</th>
+                <th>첨부파일</th>
+                <th>등록자</th>
+                <th>등록일</th>
+                <th>조회수</th>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td class="tl">내용입니다.</td>
+                <td><img src="../images/sub/btn/btn_pdf.gif" alt="pdf" /></td>
+                <td>관리자</td>
+                <td>2013-01-02</td>
+                <td>200</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td class="tl">내용입니다.</td>
+                <td><img src="../images/sub/btn/btn_pdf.gif" alt="pdf" /></td>
+                <td>관리자</td>
+                <td>2013-01-02</td>
+                <td>200</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td class="tl">내용입니다.</td>
+                <td><img src="../images/sub/btn/btn_pdf.gif" alt="pdf" /></td>
+                <td>관리자</td>
+                <td>2013-01-02</td>
+                <td>200</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td class="tl">내용입니다.</td>
+                <td><img src="../images/sub/btn/btn_pdf.gif" alt="pdf" /></td>
+                <td>관리자</td>
+                <td>2013-01-02</td>
+                <td>200</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td class="tl">내용입니다.</td>
+                <td><img src="../images/sub/btn/btn_pdf.gif" alt="pdf" /></td>
+                <td>관리자</td>
+                <td>2013-01-02</td>
+                <td>200</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td class="tl">내용입니다.</td>
+                <td><img src="../images/sub/btn/btn_pdf.gif" alt="pdf" /></td>
+                <td>관리자</td>
+                <td>2013-01-02</td>
+                <td>200</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td class="tl">내용입니다.</td>
+                <td><img src="../images/sub/btn/btn_pdf.gif" alt="pdf" /></td>
+                <td>관리자</td>
+                <td>2013-01-02</td>
+                <td>200</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td class="tl">내용입니다.</td>
+                <td><img src="../images/sub/btn/btn_pdf.gif" alt="pdf" /></td>
+                <td>관리자</td>
+                <td>2013-01-02</td>
+                <td>200</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td class="tl">내용입니다.</td>
+                <td><img src="../images/sub/btn/btn_pdf.gif" alt="pdf" /></td>
+                <td>관리자</td>
+                <td>2013-01-02</td>
+                <td>200</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td class="tl">내용입니다.</td>
+                <td><img src="../images/sub/btn/btn_pdf.gif" alt="pdf" /></td>
+                <td>관리자</td>
+                <td>2013-01-02</td>
+                <td>200</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <!-- paging-->
+          <ul class="paging">
+            <li><a href="#" title="맨 처음 페이지로 가기"><img src="../images/sub/btn/pre_01.gif"  alt="맨 처음 페이지로 가기" /></a></li>
+            <li><a href="#" title="이전 페이지로 가기"><img src="../images/sub/btn/pre.gif" alt="이전 페이지로 가기" /></a></li>
+            <li><span title="현재페이지"><a href="#" class="on">1</a></span></li>
+            <li><a href="# " title="2페이지">2</a></li>
+            <li><a href="#" title="3페이지">3</a></li>
+            <li><a href="#" title="4페이지">4</a></li>
+            <li><a href="# " title="5페이지">5</a></li>
+            <li><a href="#" title="6페이지">6</a></li>
+            <li><a href="#" title="7페이지">7</a></li>
+            <li><a href="#" title="8페이지">8</a></li>
+            <li><a href="#" title="9페이지">9</a></li>
+            <li><a href="#" title="10페이지">10</a></li>
+            <li><a href="#" title="다음 페이지로 가기" ><img src="../images/sub/btn/next.gif" alt="다음 페이지" /></a></li>
+            <li><a href="#" title="마지막 페이지로 가기"><img src="../images/sub/btn/next_01.gif" alt="마지막 페이지" /></a></li>
+          </ul>
+          <!-- //paging--> 
+          
+          <!-- btn--> 
+          <span class="bbs_btn"> 
+          <span class="wte_l"><a href="#" class="wte_r">목록</a></span> 
+          <span class="per_l"><a href="#" class="pre_r">등록</a></span>
+
+          </span> 
+          <!-- //btn--> 
+          
+        </div>
+        <div class="search_box">
+          <select>
+            <option>제목</option>
+          </select>
+          <input type="text" id="serch" name="serch" />
+          <a href="#"><img src="../images/sub/btn/btn_serch.gif" alt="검색" /></a> </div>
+      </div>
+         </div>
+         <!--//tab 03 -->
+         
+         
+      </div>
+      
+      <p class="bottom_bg"></p>
+    </div>
+  </div>
+  <!-- //container-->
+  
+  <div id="footer">
+    <h2>하단</h2>
+    <address>
+    110-781) 서울특별시 종로구 송월길 48(신문로 2-77)
+    </address>
+    <p>COPYRIGHT(C) 2013 <b>SEOUL metropolitan office of education</b> ALL RIGHT RESERVED</p>
+    <ul>
+      <li class="bn"><a href="#">개인정보보호정책</a></li>
+      <li><a href="#">이메일 무단수집거부</a></li>
+      <li><a href="#">뷰어프로그램</a></li>
+      <li><a href="#">저작권보호</a></li>
+      <li><a href="#">서울학교급식 배너다운로드</a></li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>
