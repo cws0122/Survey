@@ -14,7 +14,6 @@ public class MemberDAOImpl implements MemberDAO{
 	private SqlSession sqlSession;
 	
 	public MemberVO idCheck(MemberVO vo) {
-		System.out.println(vo.getId());
 		return sqlSession.selectOne("memberDAO.idCheck", vo);
 	}
 

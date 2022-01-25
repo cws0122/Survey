@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.spring.service.MemberServiceImpl;
@@ -31,10 +32,14 @@ public class SurveyController {
 	}
 	
 	@RequestMapping("/idCheck.do")
-	public String idCheck(MemberVO vo) {
+	public String idCheck(MemberVO vo, Model model) {
 		System.out.println("아이디 확인 과정");
-		service.idCheck(vo);
-		return "etc/Login";
+		if(service.idCheck(vo) != null) {
+			return "etc/Password";
+		}else {
+			return "etc/Login";
+		}
+		
 	}
 	
 }
