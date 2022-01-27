@@ -1,5 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -175,13 +177,21 @@ doGoTab = function(thisObject, tab) {
   
   <!-- header-->
   <div id="header">
-    <h1><a href="http://www.naver.com"><img src="images/header/common/logo.gif" alt="서울학교급식포털" /></a></h1>
+    <h1><a href="main.do"><img src="images/header/common/logo.gif" alt="서울학교급식포털" /></a></h1>
     <div class="topmenu">
       
       <ul>
         <li class="bn"><a href="#">HOME</a></li>
         <li><a href="#">SITEMAP</a></li>
-        <li class="bn"> <a href="loginForm.do"><img src="images/header/common/btn_login.gif" alt="로그인" /></a></li>
+        <c:choose>
+        	<c:when test="${member == null}">
+        	 	 <li class="bn"> <a href="loginForm.do"><img src="images/header/common/btn_login.gif" alt="로그인" /></a></li>
+        	</c:when>
+        	<c:otherwise>
+        		 <li class="bn">${member.username}님 반갑습니다.</li>
+        		 <li class="bn"><a href="logout.do"><input type="button" value="로그아웃"></a></li>
+        	</c:otherwise>
+        </c:choose>
       </ul>
     </div>
     <div id="gnb">
@@ -266,7 +276,7 @@ doGoTab = function(thisObject, tab) {
                 <li class="subMenu"><a href="#"><img src="images/header/common/sm_part02Off.gif" alt="영양(교)사이야기" /></a></li>
                 <li class="subMenu"><a href="#"><img src="images/header/common/sm_part03Off.gif" alt="조리(원)사이야기" /></a></li>
                 <li class="subMenu"><a href="#"><img src="images/header/common/sm_part04Off.gif" alt="자유게시판" /></a></li>
-                <li class="last subMenu"><a href="#"><img src="images/header/common/sm_part04Off.gif" alt="설문조사" /></a></li>
+                <li class="last subMenu"><a href="surveyListForm.do"><img src="images/header/common/sm_part05Off.gif" alt="설문조사" /></a></li>
                 <li class="right_bg"></li>
               </ul>
             </div>

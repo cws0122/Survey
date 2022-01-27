@@ -17,4 +17,9 @@ public class MemberDAOImpl implements MemberDAO{
 		return sqlSession.selectOne("memberDAO.idCheck", vo);
 	}
 
+	@Override
+	public MemberVO PwdCheck(MemberVO vo) {
+		return sqlSession.selectOne("memberDAO.PwdCheck" , vo);
+	}
+
 }

@@ -9,5 +9,10 @@
    		where id = #{id}
    </select> 
    
+   <select id="PwdCheck" resultType="com.spring.vo.MemberVO">
+   		select * from member
+   		where id = #{id} and password = #{password}
+   </select> 
+   
    
 </mapper>

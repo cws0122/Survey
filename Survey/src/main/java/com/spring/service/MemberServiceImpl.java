@@ -22,4 +22,10 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return member;
 	}
+
+	@Override
+	public MemberVO PwdCheck(MemberVO vo) {
+		MemberVO member = dao.PwdCheck(vo);
+		return member;
+	}
 }	

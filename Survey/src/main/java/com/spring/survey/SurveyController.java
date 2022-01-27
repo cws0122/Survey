@@ -1,6 +1,8 @@
 package com.spring.survey;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,11 +37,45 @@ public class SurveyController {
 	public String idCheck(MemberVO vo, Model model) {
 		System.out.println("아이디 확인 과정");
 		if(service.idCheck(vo) != null) {
+			model.addAttribute("member" , vo);
 			return "etc/Password";
 		}else {
 			return "etc/Login";
-		}
-		
+		}	
 	}
+	
+	@RequestMapping("/login.do")
+	public String login(MemberVO vo , Model model, HttpServletRequest request) {
+		System.out.println("로그인");
+		HttpSession session = request.getSession();
+		MemberVO member = service.PwdCheck(vo);
+		session.setAttribute("member", member);
+		return "redirect:main.do";
+	}
+	
+	@RequestMapping("/logout.do")
+	public String logout(HttpServletRequest request) {
+		System.out.println("로그아웃");
+		HttpSession session = request.getSession();
+		session.invalidate();
+		return "redirect:main.do";
+	}
+	
+
+	@RequestMapping("/surveyListForm.do")
+	public String surveyForm() {
+		System.out.println("설문조사 리스트로 이동");
+		return "particiation/researchList";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
