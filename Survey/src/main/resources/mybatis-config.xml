@@ -4,10 +4,12 @@
 	
   	<typeAliases>
 		<typeAlias alias="member" type="com.spring.vo.MemberVO"/>
+		<typeAlias alias="survey" type="com.spring.vo.SurveyVO"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/memberMapper.xml" />
+		<mapper resource="mappers/surveyMapper.xml" />
 	</mappers>
 	
 </configuration>

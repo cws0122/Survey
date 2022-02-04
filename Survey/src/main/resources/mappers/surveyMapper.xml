@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="surveyDAO">
+   
+   <insert id="insertSurvey">
+   		insert into survey(seq , writer , title, end_date, qcount, start_date)
+   		values(survey_seq.nextval, #{writer}, #{title}, #{end_date}, #{qcount}, #{start_date})
+   </insert>
+   
+   <select id="surveyList" resultType="com.spring.vo.SurveyVO">
+   		select * from survey
+   		order by seq desc
+   </select>
+   
+   <insert id="insertSurques">
+   		insert into surques(seq, surveyseq, question, answer1, answer2, answer3, answer4, answer5 , quesnum)
+   		values(surques_seq.nextval, #{surveyseq}, #{question}, #{answer1}, #{answer2}, #{answer3}, #{answer4}, #{answer5} , #{quesnum})
+   </insert>
+   
+   <select id="maxseq" resultType="int">
+   		select max(seq)
+   		from survey
+   </select>
+   
+   <select id="surveyDetail" resultType="com.spring.vo.SurveyVO">
+   		select * from survey
+   		where seq = #{seq}
+   </select>
+   
+   <select id="surquesDetail" resultType="com.spring.vo.SurquesVO">
+   		select * from surques
+   		where surveyseq = #{surveyseq}
+   </select>
+   
+   
+</mapper>

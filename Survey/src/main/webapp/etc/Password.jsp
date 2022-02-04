@@ -189,7 +189,7 @@
 	            	<h4><img src="../images/sub/etc/login_img_02.gif" alt="비밀번호를 입력하세요" /></h4>
 	                <dl>
 	                	<dt>비밀번호</dt>
-	                    <dd><input type="text" class="inp" name="password" id="password" style="width:180px;" /> <input id="send" type="button" value="로그인"></dd>
+	                    <dd><input type="password" class="inp" name="password" id="password" style="width:180px;" /> <input id="send" type="button" value="로그인"></dd>
 	                    <dd><input type="hidden" class="inp" name="id" id="id" style="width:180px;" value="${member.id}" /></dd>
 	                </dl>
                 </form>
