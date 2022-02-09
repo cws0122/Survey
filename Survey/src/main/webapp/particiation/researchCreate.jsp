@@ -10,12 +10,16 @@
 <link href="../css/base.css" rel="stylesheet" type="text/css" />
 <link href="../css/common.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
 
 <script type="text/javascript" >
 
 	$(function(){
+		
+		var today = new Date().toISOString().substring(0, 10);
+		
+		$('#start_date').attr("min" , today);
+		$('#end_date').attr("min" , today);
 		
 		$('#ques_cnt_btn').click(function(){
 			var count = $('#ques_cnt').val();
@@ -27,17 +31,88 @@
 				alert("문항수를 입력해주세요.");
 				$('#ques_cnt').focus();
 			}else{
-				for(var i = 0; i < count - 1; i++){
-					$('#box tbody').append(newRow.clone(true));
+				for(var i = 1; i <= count; i++){
+					var plz = "<tr class='1rows'> " + 
+			           " <td colspan='6' class='tl'> " + 	 
+			  		 "<div class='research'> " + 
+		     		  "<label>" + i + "." + "질문 제목</label> <span id='warn" + i + "' style='color: red;'></span>" +
+		      		 "<p> <input type='text' id='question" + i + "' name='question' class='inp'  title='1. 위생불량 납품단절 편함' /></p>" +
+		      			  "<ul>" +
+			                 "<li>항목1<input type='text' id='answer1_" + i + "' name='answer1' class='inp'  title='매우그렇다' /></li>" +
+			                 "<li>항목2<input type='text' id='answer2_" + i + "' name='answer2' class='inp'  title='매우그렇다' /></li>" + 
+			                 "<li>항목3<input type='text' id='answer3_" + i + "' name='answer3' class='inp'  title='매우그렇다' /></li>" + 
+			                 "<li>항목4<input type='text' id='answer4_" + i + "' name='answer4' class='inp' title='매우그렇다' /></li>" + 
+			                 "<li>항목5<input type='text' id='answer5_" + i + "' name='answer5' class='inp'  title='매우그렇다' /></li>" + 
+		      		 	 "</ul>" + 
+						"</div>" + 
+				  		"</td>" + 
+				 		"</tr>";
+					$('#box tbody').append(plz);
 				}
+				$('#ques_cnt').prop('readonly', true);
 			}
 		});
 		
-	$('#send').click(function(){
-		$('#surbeyForm').submit();
-	})
+		$('#clean').click(function(){
+		 		$('.1rows').remove();
+		 		$('#ques_cnt').val('');
+		 		$('#ques_cnt').prop('readonly', false);
+		});
 		
+	$('#send').click(function(){
+		var title = $('#title').val();
+		var start_date = $('#start_date').val();
+		var end_date = $('#end_date').val();
+		var count = $('#ques_cnt').val();
+		var chk = 0;
+		var chk2 = 0;
+		
+		for(var i=1; i<=count; i++){	
+			if($.trim($('#question'+i).val()) == ''){
+				chk += 1;
+				$('#warn' + i).text("질문을 입력해주세요. (질문에 빈칸만 삽입은 불가능합니다.)");
+				if(chk >= 1){
+					alert('질문을 확인하고 다시 시도해주세요.');
+				}
+			}else{
+				$('#warn' + i).text("");
+			}	
+		} 
+		
+		for(var i=1; i<=count; i++){
+			var chk3 = 0;
+			for(var j=1; j <= 5; j++){
+				if($.trim($('#answer' + j + '_' + i).val()) == ''){
+					chk3 += 1;
+					chk2 += 1;
+				}
+			}
+			if(chk3 > 2){
+				alert('질문별 항목을 최소 두개는 입력해주세요.');
+				console.log(chk3);
+			}
+		}
+		
+		if(title == ''){
+			alert('제목을 입력하세요.');
+		}else if(start_date == '' || end_date == ''){
+			alert("시작일 혹은 종료일을 선택해주세요.");
+		}else if(count == ''){
+			alert("문항 개수를 입력해주세요.");
+		}else if(chk >= 1 && chk2 >= 1){
+			console.log('둘다만족?');
+		}else{
+			//$('#surbeyForm').submit();
+		}
 	});
+		
+	
+	});
+	
+	function changeDate(obj){
+		var start = $('#start_date').val();
+		console.log(start);
+	}
 
 </script>
 </head>
@@ -151,7 +226,7 @@
                 <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part02Off.gif" alt="영양(교)사이야기" /></a></li>
                 <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part03Off.gif" alt="조리(원)사이야기" /></a></li>
                 <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part04Off.gif" alt="자유게시판" /></a></li>
-                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_part04Off.gif" alt="설문조사" /></a></li>
+                <li class="last subMenu"><a href="surveyListForm.do"><img src="../images/header/common/sm_part04Off.gif" alt="설문조사" /></a></li>
                 <li class="right_bg"></li>
               </ul>
             </div>
@@ -188,7 +263,7 @@
         <li><a href="#"><img src="../images/sub/particiation/sub_stitle_02Off.gif" alt="영양(교)사이야기" /></a></li>
         <li><a href="#"><img src="../images/sub/particiation/sub_stitle_03Off.gif" alt="조리(원)사이야기" /></a></li>
         <li><a href="#"><img src="../images/sub/particiation/sub_stitle_04Off.gif" alt="자유게시판" /></a></li>
-        <li><a href="#"><img src="../images/sub/particiation/sub_stitle_05On.gif" alt="설문조사" /></a></li>
+        <li><a href="surveyListForm.do"><img src="../images/sub/particiation/sub_stitle_05On.gif" alt="설문조사" /></a></li>
       </ul>
       <div class="right_box">
         <h3><img src="../images/sub/particiation/title_04.gif" alt="급식기구관리전환" /></h3>
@@ -217,33 +292,20 @@
                 </tr>
               <tr>
                 <th>시작일</th>
-                <td class="tl"><input id="start_date" type="date" id="start_date" name="start_date" class="inp" style="width:100px;" /></td>
+                <td class="tl"><input type="date" id="start_date" name="start_date" class="inp" style="width:100px;" onchange="changeDate(this)"/></td>
                 <th>종료일</th>
-                <td class="tl"><input id="end_date" type="date" id="end_date" name="end_date" class="inp" style="width:100px;" /></td>
+                <td class="tl"><input type="date" id="end_date" name="end_date" class="inp" style="width:100px;" /></td>
               </tr>
               <tr>
                 <th>문항수</th>
                 <td colspan="5" class="tl">
-                <input type="text" id="ques_cnt" name="qcount">
+                <input type="text" id="ques_cnt" name="qcount" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                 <input type="button" id="ques_cnt_btn" value="확인">
+                <input type="button" id="clean" value="문항수 초기화">
                 </td>
               </tr>
                 <!-- 이부분부터 -->
-              <tr class="1rows">
-               <td colspan="6" class="tl">	 
-               	   <div class="research">
-                       <p><input type="text" id="question" name="question" class="inp"  title="1. 위생불량 납품단절 편함" /></p>
-                        <ul>
-                        <li><input type="text" id="answer1" name="answer1" class="inp"  title="매우그렇다" /></li>
-                        <li><input type="text" id="answer2" name="answer2" class="inp"  title="매우그렇다" /></li>
-                        <li><input type="text" id="answer3" name="answer3" class="inp"  title="매우그렇다" /></li>
-                        <li><input type="text" id="answer4" name="answer4" class="inp" title="매우그렇다" /></li>
-                        <li><input type="text" id="answer5" name="answer5" class="inp"  title="매우그렇다" /></li>
-                        <li>선택사유 <input type="text" id="reason" name="reason" class="inp" style="width:650px;" /> </li>
-                        </ul>
-					</div>
-               </td>
-              </tr>
+              
               <!-- 이부분까지 추가해야함. -->
             </tbody>
           </table>
@@ -254,8 +316,6 @@
 
           <span class="wte_l"><a href="surveyListForm.do" class="wte_r">목록</a></span>
           <span class="per_l"><a id="send" class="pre_r">등록</a></span>
-          <span class="wte_l"><a href="#" class="wte_r">취소</a></span>
-          
           
 
           </span> 

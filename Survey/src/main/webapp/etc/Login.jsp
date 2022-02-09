@@ -16,13 +16,15 @@
 	$(document).ready(function(){
 		$('#send').click(function(){
 			var id = $('#id').val();
+			var password = $('#password').val();
 			if(id == ''){
 				alert('아이디를 입력해주세요.');
 				$('#id').focus();
-			}else if(id != 'cws0122' && id != 'admin'){
-				alert('존재하지 않는 아이디입니다 다시 확인해주세요.');
-				$('#id').focus();
-			}else{
+			}else if(password == ''){
+				alert('비밀번호를 입력해주세요.');
+				$('#password').focus();
+			}
+			else{
 				$('#loginForm').submit();
 			}
 		});
@@ -186,14 +188,20 @@
         	<legend>로그인</legend>
         	<div class="login">            
             	<h4><img src="../images/sub/etc/login_img_01.gif" alt="아이디를 입력하세요" /></h4>
-            	<form id="loginForm" action="idCheck.do" method="post">
+            	<form id="loginForm" action="login.do" method="post">
                 	<dl>
                 		<dt>아이디</dt>
                     	<dd>
                     		<input type="text" class="inp" name="id" id="id" style="width:180px;" /> 
-                    		<input id="send" type="button" value="로그인"/>
                     	</dd>
+                    	<br><br>
+                    	<dt>비밀번호</dt>
+	                    <dd>
+	                    	<input type="password" class="inp" name="password" id="password" style="width:180px;" /> 
+	                    	<input id="send" type="button" value="로그인">
+	                    </dd>
                 	</dl>
+                	
                 </form>
                 
                 <ul class="login_text">

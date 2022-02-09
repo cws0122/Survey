@@ -6,11 +6,14 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.spring.dao.MemberDAOImpl;
 import com.spring.vo.MemberVO;
+import com.spring.vo.Paging;
 import com.spring.vo.SurquesVO;
 import com.spring.vo.SurveyVO;
+import com.spring.vo.SurveyresultVO;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -75,5 +78,55 @@ public class MemberServiceImpl implements MemberService{
 	public List<SurquesVO> surquesDetail(int seq) {
 		List<SurquesVO> surquesList = dao.surquesDetail(seq);
 		return surquesList;
+	}
+
+	@Override
+	public void insertResult(SurveyVO vo , HttpServletRequest request) {
+		SurveyresultVO result = new SurveyresultVO();
+		result.setSurseq(vo.getSeq());
+		for(int i=0; i < vo.getQcount(); i++) {
+			result.setQuesnum(Integer.parseInt(request.getParameter("quesnum" + i)));
+			result.setReason(request.getParameter("reason" + i));
+			result.setAnswer(request.getParameter("group" + i));
+			dao.insertResult(result);
+		}
+	}
+
+	@Override
+	public void Paging(Model model, HttpServletRequest request) {
+		String path = "/surveyListForm.do?cPage=";
+		int cPage;
+		try {
+			cPage = Integer.parseInt(request.getParameter("cPage"));
+		} catch (NumberFormatException e) {
+			cPage = 1;
+		}
+		
+		int numPerPage;  
+        try {
+            numPerPage = Integer.parseInt(request.getParameter("numPerPage"));
+        }catch (NumberFormatException e) {
+            numPerPage = 10;
+        }
+        
+        int AllSurveycount = dao.getAllCount();
+        List<SurveyVO> AllSurveyList = dao.SurveyListPaging(cPage, numPerPage);
+        model.addAttribute("total" , AllSurveycount);
+        int totalPage = (int)Math.ceil((double)AllSurveycount/numPerPage);
+        Paging paging = new Paging();
+        paging.paging(request, path, AllSurveyList, totalPage, cPage, numPerPage);
+		
+	}
+
+	@Override
+	public void getResult(int seq, SurveyVO vo) {
+		for(int i=1; i <= vo.getQcount(); i++) {
+			dao.AnswerCount1(dao.getResult(seq, i, 1), seq, i);
+			dao.AnswerCount2(dao.getResult(seq, i, 2), seq, i);
+			dao.AnswerCount3(dao.getResult(seq, i, 3), seq, i);
+			dao.AnswerCount4(dao.getResult(seq, i, 4), seq, i);
+			dao.AnswerCount5(dao.getResult(seq, i, 5), seq, i);
+		}
+		
 	}
 }	

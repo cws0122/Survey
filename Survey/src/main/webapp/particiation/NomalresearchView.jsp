@@ -13,112 +13,13 @@
 <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
 
 <script type="text/javascript" >
-<!--
-
-	var flag1=true;
-	var flag2=true;
-	
-	$(document).ready(function(){
-		$(".mainMenu").each(function(index, item){
-			$(item).click(function(){
-				flag1=false;
-			});
-		});
-		
-		$(".subMenu").each(function(index, item){
-			$(item).click(function(){
-				flag1=true;
-				flag2=false;
-			});
+	$(function(){
+		$('#result').click(function(){
+			$('#resultForm').submit();
 		});
 	});
 
-   function getElementsByClass(searchClass, node, tag) {
-     var classElements = new Array();
-     if ( node == null ) node = document;
-     if ( tag == null ) tag = '*';
-     var els = node.getElementsByTagName(tag);
-     var elsLen = els.length;
-     var pattern = new RegExp("(^|\\s)"+searchClass+"(\\s|$)");
-     for (i = 0, j = 0; i < elsLen; i++) {
-      if ( pattern.test(els[i].className) ) {
-        classElements[j] = els[i];
-        j++;
-      }
-    }
-    return classElements;
-  }
-
-  function menuHidden(menu, sub) {
-    menu.src = menu.src.replace("On", "Off");
-    sub.style.display = "none";
-  }
-
-  function setEvtGnb() {
-    var mainMenu = getElementsByClass("mainMenu");
-    var prevMenu1, prevSub1, isHid1, prevMenu2, isHid2;
-	
-	var subMenu = getElementsByClass("subMenu");
-	
-    for (var i=0; i<mainMenu.length; i++) {
-      (function (pos){
-        mainMenu[pos].getElementsByTagName("img")[0].onmouseover = function(){
-          if(prevMenu1) menuHidden(prevMenu1, prevSub1);
-          prevMenu1 = this;
-          this.src = this.src.replace("Off", "On");
-          prevSub1 = document.getElementById("sub"+("0"+(pos+1)).match(/..$/));
-          prevSub1.style.display = "block";
-        };
-    
-        mainMenu[pos].onmouseout = function(e){
-          var bool, e= e || event;
-          (function (obj, tobj) {
-            var childs = obj.childNodes;
-            for (var x=0; x<childs.length; x++) {
-              if(childs[x] == tobj) bool = true;
-              else arguments.callee(childs[x], tobj);
-            }
-          })(this, document.elementFromPoint(e.clientX, e.clientY));
-          if(flag1){
-	          if(bool) return false;
-	          menuHidden(prevMenu1, prevSub1);
-          }
-        };
-      })(i);
-    }
-	
-	for (var j=0; j<subMenu.length; j++) {
-      (function (pos){
-        subMenu[pos].getElementsByTagName("img")[0].onmouseover = function(){
-          prevMenu2 = this;
-          this.src = this.src.replace("Off", "On");
-          prevSub2 = document.getElementById("sub"+("0"+(pos+1)).match(/..$/));
-       	  flag2=true;
-        };
-    
-        subMenu[pos].onmouseout = function(e){
-          var bool, e= e || event;
-          (function (obj, tobj) {
-            var childs = obj.childNodes;
-            for (var x=0; x<childs.length; x++) {
-              if(childs[x] == tobj) bool = true;
-              else arguments.callee(childs[x], tobj);
-            }
-          })(this, document.elementFromPoint(e.clientX, e.clientY));
-          if(flag2){
-	          if(bool) return false;
-	          menuHidden(prevMenu2, prevSub2);
-          }
-        };
-      })(j);
-    }
-  }
- 
-  window.onload = function() {
-    setEvtGnb();
-  }
-//-->
-</SCRIPT>
+</script>
 
 <script type="text/javascript">
 initPage = function() {
@@ -159,7 +60,15 @@ doGoTab = function(thisObject, tab) {
       <ul>
         <li class="bn"><a href="#">HOME</a></li>
         <li><a href="#">SITEMAP</a></li>
-        <li class="bn"> <a href="#"><img src="../images/header/common/btn_login.gif" alt="로그인" /></a></li>
+        <c:choose>
+        	<c:when test="${member == null}">
+        	 	 <li class="bn"> <a href="loginForm.do"><img src="images/header/common/btn_login.gif" alt="로그인" /></a></li>
+        	</c:when>
+        	<c:otherwise>
+        		 <li class="bn">${member.username}님 반갑습니다.</li>
+        		 <li class="bn"><a href="logout.do"><input type="button" value="로그아웃"></a></li>
+        	</c:otherwise>
+        </c:choose>
       </ul>
     </div>
     <div id="gnb">
@@ -290,6 +199,9 @@ doGoTab = function(thisObject, tab) {
         
        
         <div class="tbl_box">
+        	<form id="resultForm" action="result.do" method="post">
+        	<input type="hidden" name="seq" value="${survey.seq}">
+        	<input type="hidden" name="qcount" value="${survey.qcount}">
           <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tbl_type01" summary="설문조사">
             <caption>
             설문조사
@@ -313,32 +225,49 @@ doGoTab = function(thisObject, tab) {
                 <th>종료일</th>
                 <td class="tl">${survey.end_date }</td>
                 <th>결과확인</th>
-                <td class="tl"><img src="../images/sub/btn/btn_view.gif" alt="결과보기" /></td>
+                <td class="tl"><a href="SurveyResultShow.do?seq=${survey.seq}"><img src="../images/sub/btn/btn_view.gif" alt="결과보기" /></a></td>
+              </tr>
+              <tr>
+              	<th>작성자</th>
+                <td colspan="5" class="tl">${survey.writer}</td>
               </tr>
               <tr>
                 <th>문항수</th>
                 <td colspan="5" class="tl">${survey.qcount}개</td>
-                </tr>
+              </tr>
               <tr>
                <td colspan="6" class="tl">
+               		<c:set var="num" value="0" />
                		<c:forEach var="surques" items="${surquesList}">
 	               	   <div class="research">
 	                       <p>${surques.question}</p>
+	                       <input type="hidden" name="quesnum${num}" value="${surques.quesnum }">
 	                        <ul>
-	                        <li><input type="radio" name="answer1" value="${surques.answer1}">&nbsp;&nbsp;${surques.answer1}</li>
-	                        <li><input type="radio" name="answer2" value="${surques.answer2}">&nbsp;&nbsp;${surques.answer2}</li>
-	                        <li><input type="radio" name="answer3" value="${surques.answer3}">&nbsp;&nbsp;${surques.answer3}</li>
-	                        <li><input type="radio" name="answer4" value="${surques.answer4}">&nbsp;&nbsp;${surques.answer4}</li>
-	                        <li><input type="radio" name="answer5" value="${surques.answer5}">&nbsp;&nbsp;${surques.answer5}</li>
-	                        <li>선택사유 <input type="text" id="reason" name="reason" class="inp" style="width:200px;" /> </li>
+	                        	<c:if test="${surques.answer1 != null}">
+	                        		<li><input type="radio" name="group${num}" value="1">&nbsp;&nbsp;${surques.answer1}</li>
+	                       		</c:if>
+	                       		<c:if test="${surques.answer2 != null}">
+	                        		<li><input type="radio" name="group${num}" value="2">&nbsp;&nbsp;${surques.answer2}</li>
+	                       		</c:if>
+	                      		<c:if test="${surques.answer3 != null}">
+	                        		<li><input type="radio" name="group${num}" value="3">&nbsp;&nbsp;${surques.answer3}</li>
+	                       		</c:if>
+	                       		<c:if test="${surques.answer4 != null}">
+	                        		<li><input type="radio" name="group${num}" value="4">&nbsp;&nbsp;${surques.answer4}</li>
+	                       		</c:if>
+	                       		<c:if test="${surques.answer5 != null}">
+	                        		<li><input type="radio" name="group${num}" value="5">&nbsp;&nbsp;${surques.answer5}</li>
+	                       		</c:if>
+	                        <li>선택사유 <input type="text" id="reason${num}" name="reason${num}" class="inp" style="width:200px;" /> </li>
 	                        </ul>
 						</div>
+					<c:set var="num" value="${num + 1}" />
 					</c:forEach>
                </td>
               </tr>
             </tbody>
           </table>
-          
+          </form>
           <p class="pt40"></p>
           <!-- btn--> 
           <span class="bbs_btn"> 
@@ -346,8 +275,10 @@ doGoTab = function(thisObject, tab) {
           <span class="wte_l"><a href="surveyListForm.do" class="wte_r">목록</a></span>
 <!--           <span class="wte_l"><a href="#" class="wte_r">수정</a></span>
           <span class="wte_l"><a href="#" class="wte_r">삭제</a></span> -->
-          <span class="per_l"><a href="#" class="pre_r">결과보기</a></span>
-          <span class="wte_l"><a href="#" class="wte_r">사유전체보기</a></span>
+          <c:if test="${survey.state != 'O'}">
+          	<span class="per_l"><a id="result" href="#" class="pre_r">등록하기</a></span>
+          </c:if>
+          <!-- <span class="wte_l"><a href="#" class="wte_r">사유전체보기</a></span> -->
           
           
 

@@ -154,7 +154,7 @@ doGoTab = function(thisObject, tab) {
   
   <!-- header-->
   <div id="header">
-    <h1><img src="../images/header/common/logo.gif" alt="서울학교급식포털" /></h1>
+    <h1><a href="main.do"><img src="../images/header/common/logo.gif" alt="서울학교급식포털" /></a></h1>
     <div class="topmenu">
       <ul>
         <li class="bn"><a href="main.do">HOME</a></li>
@@ -252,7 +252,7 @@ doGoTab = function(thisObject, tab) {
                 <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part02Off.gif" alt="영양(교)사이야기" /></a></li>
                 <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part03Off.gif" alt="조리(원)사이야기" /></a></li>
                 <li class="subMenu"><a href="#"><img src="../images/header/common/sm_part04Off.gif" alt="자유게시판" /></a></li>
-                <li class="last subMenu"><a href="#"><img src="../images/header/common/sm_part04Off.gif" alt="설문조사" /></a></li>
+                <li class="last subMenu"><a href="surveyListForm.do"><img src="../images/header/common/sm_part05Off.gif" alt="설문조사" /></a></li>
                 <li class="right_bg"></li>
               </ul>
             </div>
@@ -289,7 +289,7 @@ doGoTab = function(thisObject, tab) {
         <li><a href="#"><img src="../images/sub/particiation/sub_stitle_02Off.gif" alt="영양(교)사이야기" /></a></li>
         <li><a href="#"><img src="../images/sub/particiation/sub_stitle_03Off.gif" alt="조리(원)사이야기" /></a></li>
         <li><a href="#"><img src="../images/sub/particiation/sub_stitle_04Off.gif" alt="자유게시판" /></a></li>
-        <li><a href="#"><img src="../images/sub/particiation/sub_stitle_05On.gif" alt="설문조사" /></a></li>
+        <li><a href="surveyListForm.do"><img src="../images/sub/particiation/sub_stitle_05On.gif" alt="설문조사" /></a></li>
       </ul>
       <div class="right_box">
         <h3><img src="../images/sub/particiation/title_05.gif" alt="급식기구관리전환" /></h3>
@@ -319,9 +319,10 @@ doGoTab = function(thisObject, tab) {
                 <th>완료여부</th> 
                 <th>결과확인</th>
               </tr>
+              <c:set var="num" value="${total - ((cPage-1) * numPerPage)}" />
               <c:forEach var="survey" items="${surList}">
               	<tr>
-	                <td>${survey.seq }</td>
+	                <td>${num }</td>
 	                <td class="tl"><a href="surveyDetail.do?seq=${survey.seq}">${survey.title }</a></td>
 	                <td>${survey.start_date}</td>                
 	                <td>${survey.end_date }</td>
@@ -331,31 +332,19 @@ doGoTab = function(thisObject, tab) {
 	                <c:if test="${survey.state == 'X' }">
 	                	<td>미완료</td>
 	                </c:if>
-	                <td><a href="#"><img src="../images/sub/btn/btn_view.gif" alt="결과보기" /></a></td>
+	                <td><a href="SurveyResultShow.do?seq=${survey.seq}"><img src="../images/sub/btn/btn_view.gif" alt="결과보기" /></a></td>
             	</tr> 
+            	<c:set var="num" value="${num -1}" />
               </c:forEach>
             </tbody>
           </table>
           
           <!-- paging-->
-          <ul class="paging">
-            <li><a href="#" title="맨 처음 페이지로 가기"><img src="../images/sub/btn/pre_01.gif"  alt="맨 처음 페이지로 가기" /></a></li>
-            <li><a href="#" title="이전 페이지로 가기"><img src="../images/sub/btn/pre.gif" alt="이전 페이지로 가기" /></a></li>
-            <li><span title="현재페이지"><a href="#" class="on">1</a></span></li>
-            <li><a href="# " title="2페이지">2</a></li>
-            <li><a href="#" title="3페이지">3</a></li>
-            <li><a href="#" title="4페이지">4</a></li>
-            <li><a href="# " title="5페이지">5</a></li>
-            <li><a href="#" title="6페이지">6</a></li>
-            <li><a href="#" title="7페이지">7</a></li>
-            <li><a href="#" title="8페이지">8</a></li>
-            <li><a href="#" title="9페이지">9</a></li>
-            <li><a href="#" title="10페이지">10</a></li>
-            <li><a href="#" title="다음 페이지로 가기" ><img src="../images/sub/btn/next.gif" alt="다음 페이지" /></a></li>
-            <li><a href="#" title="마지막 페이지로 가기"><img src="../images/sub/btn/next_01.gif" alt="마지막 페이지" /></a></li>
-          </ul>
+          <div style="text-align:center;">
+          	${pageBar}
+          </div>
           <!-- //paging--> 
-          
+           <div style="height : 20px;"></div>
           <!-- btn--> 
           <span class="bbs_btn"> 
 

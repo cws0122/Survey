@@ -34,5 +34,96 @@
    		where surveyseq = #{surveyseq}
    </select>
    
+   <insert id="insertResult">
+   		insert into surveyresult(seq, surseq, quesnum, answer, reason)
+   		values(surresult_seq.nextval, #{surseq}, #{quesnum}, #{answer}, #{reason})
+   </insert>
+   
+   <select id="getAllCount" resultType="int" >
+		select count(seq) from survey
+	</select>
+   
+   <select id="SurveyListPaging" resultType="com.spring.vo.SurveyVO">
+   		select * from (select ROWNUM as rnum, s.*
+   		from (select * from survey order by seq desc) s)
+   		where rnum between (#{cPage} - 1) * #{numPerPage} + 1 and #{cPage} * #{numPerPage}
+   </select>
+   
+   <select id="getResult" resultType="int">
+   		select count(seq) from surveyresult
+   		where surseq = #{surseq} and quesnum = #{quesnum} and answer = #{answer}
+   </select>
+   
+   <update id="AnswerCount1">
+   		update surques
+   		set
+   		an1cnt = #{count}
+   		where surveyseq = #{surveyseq} and quesnum = #{quesnum} 
+   </update>
+   
+   <update id="AnswerCount2">
+   		update surques
+   		set
+   		an2cnt = #{count}
+   		where surveyseq = #{surveyseq} and quesnum = #{quesnum} 
+   </update>
+   
+   <update id="AnswerCount3">
+   		update surques
+   		set
+   		an3cnt = #{count}
+   		where surveyseq = #{surveyseq} and quesnum = #{quesnum} 
+   </update>
+   
+   <update id="AnswerCount4">
+   		update surques
+   		set
+   		an4cnt = #{count}
+   		where surveyseq = #{surveyseq} and quesnum = #{quesnum} 
+   </update>
+   
+   <update id="AnswerCount5">
+   		update surques
+   		set
+   		an5cnt = #{count}
+   		where surveyseq = #{surveyseq} and quesnum = #{quesnum} 
+   </update>
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
    
 </mapper>

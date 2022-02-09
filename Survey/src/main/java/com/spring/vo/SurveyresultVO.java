@@ -1,8 +1,8 @@
 package com.spring.vo;
 
 public class SurveyresultVO {
-	private int seq, surseq;
-	private String question, answer, reason;
+	private int seq, quesnum, surseq;
+	private String answer, reason;
 	public int getSeq() {
 		return seq;
 	}
@@ -15,11 +15,11 @@ public class SurveyresultVO {
 	public void setSurseq(int surseq) {
 		this.surseq = surseq;
 	}
-	public String getQuestion() {
-		return question;
+	public int getQuesnum() {
+		return quesnum;
 	}
-	public void setQuestion(String question) {
-		this.question = question;
+	public void setQuesnum(int quesnum) {
+		this.quesnum = quesnum;
 	}
 	public String getAnswer() {
 		return answer;

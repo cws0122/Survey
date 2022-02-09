@@ -13,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.spring.dao.MemberDAOImpl;
 import com.spring.service.MemberServiceImpl;
 import com.spring.vo.MemberVO;
+import com.spring.vo.Paging;
 import com.spring.vo.SurquesVO;
 import com.spring.vo.SurveyVO;
 
@@ -38,24 +40,20 @@ public class SurveyController {
 		return "etc/Login";
 	}
 	
-	@RequestMapping("/idCheck.do")
-	public String idCheck(MemberVO vo, Model model) {
-		System.out.println("아이디 확인 과정");
-		if(service.idCheck(vo) != null) {
-			model.addAttribute("member" , vo);
-			return "etc/Password";
-		}else {
-			return "etc/Login";
-		}	
-	}
 	
 	@RequestMapping("/login.do")
 	public String login(MemberVO vo , Model model, HttpServletRequest request) {
 		System.out.println("로그인");
 		HttpSession session = request.getSession();
 		MemberVO member = service.PwdCheck(vo);
-		session.setAttribute("member", member);
-		return "redirect:main.do";
+		if(member != null) {
+			session.setAttribute("member", member);
+			return "redirect:main.do";
+		}else {
+			model.addAttribute("msg", "아이디 및 비밀번호가 틀렸습니다.");
+			model.addAttribute("url" , "loginForm.do");
+			return "alert";
+		}
 	}
 	
 	@RequestMapping("/logout.do")
@@ -68,17 +66,23 @@ public class SurveyController {
 	
 
 	@RequestMapping("/surveyListForm.do")
-	public String surveyForm(Model model) {
+	public String surveyForm(Model model, HttpServletRequest request) {
 		System.out.println("설문조사 리스트로 이동");
-		List<SurveyVO> surList = service.SurveyList();
-		model.addAttribute("surList" , surList);
+		service.Paging(model, request);
 		return "particiation/researchList";
 	}
 	
 	@RequestMapping("/surveyWriteForm.do")
-	public String surveyWriteForm() {
+	public String surveyWriteForm(HttpServletRequest request , Model model) {
 		System.out.println("설문조사 작성 페이지로 이동");
-		return "particiation/researchCreate";
+		HttpSession session = request.getSession();
+		if(session.getAttribute("member") == null) {
+				model.addAttribute("msg" , "로그인 후 이용해주세요");
+				model.addAttribute("url" , "loginForm.do");
+			return "alert";
+		}else {
+			return "particiation/researchCreate";
+		}
 	}
 
 	
@@ -99,7 +103,24 @@ public class SurveyController {
 		return "particiation/NomalresearchView";
 	}
 	
+
+	@RequestMapping("/result.do")
+	public String Result(SurveyVO vo, HttpServletRequest request) {
+		System.out.println("설문조사 결과 삽입");
+		service.insertResult(vo, request);
+		return "redirect:surveyListForm.do";
+	}
 	
+	
+	@RequestMapping("/SurveyResultShow.do")
+	public String SurveyResultShow(@RequestParam("seq") int seq , Model model) {
+		SurveyVO survey = service.surveyDetail(seq);
+		service.getResult(seq, survey);
+		List<SurquesVO> surquesList = service.surquesDetail(seq);
+		model.addAttribute("survey" , survey);
+		model.addAttribute("surquesList" , surquesList);
+		return "particiation/researchPopup";
+	}
 	
 	
 	
